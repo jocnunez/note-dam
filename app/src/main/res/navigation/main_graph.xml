@@ -15,10 +15,11 @@
         android:name="com.dam.ad.notedam.presentation.todos.TodosFragment"
         android:label="fragment_todos"
         tools:layout="@layout/fragment_todos" />
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.dam.ad.notedam.presentation.settings.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        android:label="fragment_todos"
+        tools:layout="@xml/preferences" />
 
 </navigation>
