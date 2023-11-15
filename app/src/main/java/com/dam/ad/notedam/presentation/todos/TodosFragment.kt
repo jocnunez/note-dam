@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dam.ad.notedam.databinding.FragmentTodosBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TodosFragment : Fragment() {
 
     private var _binding: FragmentTodosBinding? = null
