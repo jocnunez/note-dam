@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- ListPreference para seleccionar entre Local y Remoto -->
+    <ListPreference
+            app:key="data_source"
+            app:title="Data Source"
+            app:summary="Select data source (Local or Remote)"
+            app:dialogTitle="Select Data Source"
+            app:defaultValue="local"
+            app:entries="@array/data_sources_entries"
+            app:entryValues="@array/data_sources_values"/>
+
+</PreferenceScreen>
