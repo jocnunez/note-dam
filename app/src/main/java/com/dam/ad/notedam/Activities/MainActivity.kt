@@ -1,4 +1,4 @@
-package com.dam.ad.notedam.presentation.home
+package com.dam.ad.notedam.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
