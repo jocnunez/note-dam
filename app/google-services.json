@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "304469624097",
+    "project_id": "prueba-topepino",
+    "storage_bucket": "prueba-topepino.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304469624097:android:770e5ef0394009384baa60",
+        "android_client_info": {
+          "package_name": "com.dam.ad.notedam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304469624097-qqrrtsi1s5a0udcpkv7ua4h76cvamn2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwsDxSCJOjKWj_KSWZpTbJbw4IjFsuClk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304469624097-qqrrtsi1s5a0udcpkv7ua4h76cvamn2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

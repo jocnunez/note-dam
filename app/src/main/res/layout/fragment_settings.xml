@@ -4,16 +4,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.settings.SettingsFragment">
+    tools:context=".Fragments.SettingsFragment"
+    android:background="@color/AzulOscuro">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/AzulSemiClaro"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/settings_title" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Tipo de BBDD:"
+        android:textColor="@color/AzulClaro"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupBBDD"
+        android:layout_width="146dp"
+        android:layout_height="149dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <RadioButton
+            android:id="@+id/Local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/AzulSemiClaro"
+            android:text="Local" />
+
+        <RadioButton
+            android:id="@+id/SQL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/AzulSemiClaro"
+            android:text="SQL" />
+
+        <RadioButton
+            android:id="@+id/Mongo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/AzulSemiClaro"
+            android:text="Mongo" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="Tipo de Formato:"
+        android:textColor="@color/AzulClaro"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupBBDD" />
+
+    <RadioGroup
+        android:layout_width="190dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <RadioButton
+            android:id="@+id/csv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/AzulSemiClaro"
+            android:text="CSV" />
+
+        <RadioButton
+            android:id="@+id/JSON"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/AzulSemiClaro"
+            android:text="JSON" />
+
+        <RadioButton
+            android:id="@+id/XML"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/AzulSemiClaro"
+            android:text="XML" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
