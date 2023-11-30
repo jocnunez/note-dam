@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.dam.ad.notedam.models.Category
 import com.dam.ad.notedam.models.errors.CategoryError
+import com.dam.ad.notedam.utils.Utils
 import com.dam.ad.notedam.utils.mappers.fromCsvRowToCategory
 import com.dam.ad.notedam.utils.mappers.toCsvRow
 import com.dam.ad.notedam.utils.validators.FileAction
@@ -14,20 +15,23 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapBoth
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class CategoryStorageCsv: CategoryStorageService {
-    private val fileName = "_categories.csv"
+    private val fileNameBase = "_categories.csv"
     private val header = "uuid,title,description,priority,notes\n"
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun saveAll(elements: Iterable<Category>, filePath: String): Result<Iterable<Category>, CategoryError> {
-        val file = File(filePath + fileName)
+
+    override fun export(element: Category, filePath: String, clearFiles: Boolean): Result<Category, CategoryError> {
+        val fileUsing = filePath + element.uuid + fileNameBase
+        if(clearFiles){
+            Utils.clearFilesFn(listOf(fileUsing), filePath, fileNameBase)
+        }
+        val file = File(filePath + element.uuid + fileNameBase)
         return file.validate(FileAction.WRITE).mapBoth(
             success = {
-                return try{
+                try{
                     file.writeText(header)
-                    elements.forEach {
-                        file.appendText(it.toCsvRow())
-                    }
-                    Ok(elements)
+                    file.appendText(element.toCsvRow())
+                    Ok(element)
                 }catch (e: Exception){
                     Err(CategoryError.ExportError("CSV"))
                 }
@@ -38,19 +42,53 @@ class CategoryStorageCsv: CategoryStorageService {
         )
     }
 
-    override fun loadAll(filePath: String): Result<List<Category>, CategoryError> {
-        val file = File(filePath + fileName)
-        return file.validate(FileAction.READ).mapBoth(
-            success = {
-                try {
-                    Ok(file.readLines().drop(1).map { it.fromCsvRowToCategory() })
-                } catch (e: Exception) {
-                    Err(CategoryError.ImportError("CSV"))
+    override fun exportAll(elements: Iterable<Category>, filePath: String, clearFiles: Boolean): Result<Iterable<Category>, CategoryError> {
+        val filesUsing = elements.map { filePath + it.uuid + fileNameBase }
+        if(clearFiles){
+            Utils.clearFilesFn(filesUsing, filePath, fileNameBase)
+        }
+
+        elements.forEach {category ->
+            val file = File(filePath + category.uuid + fileNameBase)
+            file.validate(FileAction.WRITE).mapBoth(
+                success = {
+                    try{
+                        file.writeText(header)
+                        file.appendText(category.toCsvRow())
+                    }catch (e: Exception){
+                        return Err(CategoryError.ExportError("CSV"))
+                    }
+                },
+                failure = {
+                    return Err(CategoryError.ExportError("CSV"))
                 }
-            },
-            failure = {
-                Err(CategoryError.ImportError("CSV"))
-            }
-        )
+            )
+        }
+
+        return Ok(elements)
+    }
+
+    override fun loadAll(filePath: String): Result<List<Category>, CategoryError> {
+        //Todos los ficheros que terminen en _categories.csv
+        val files = File(filePath).listFiles { _, name -> name.endsWith(fileNameBase) }
+        if(files.isNullOrEmpty()){
+            return Err(CategoryError.ImportError("JSON"))
+        }
+        val categories = mutableListOf<Category>()
+        files.forEach { file ->
+            file.validate(FileAction.READ).mapBoth(
+                success = {
+                    try{
+                        categories.addAll(file.readLines().drop(1).map { it.fromCsvRowToCategory() })
+                    }catch (e: Exception){
+                        return Err(CategoryError.ImportError("CSV"))
+                    }
+                },
+                failure = {
+                    return Err(CategoryError.ImportError("CSV"))
+                }
+            )
+        }
+        return Ok(categories)
     }
 }

@@ -55,3 +55,7 @@ x
 Happ/src/main/java/com/dam/ad/notedam/presentation/todos/TodosFragment.kt,c\7\c7e926a5810d27e0774966ad5dd9154f9a11825d
 g
 7app/src/test/java/com/dam/ad/notedam/ExampleUnitTest.kt,8\4\845b3f4d8ac1196bc95f0353d6a123205e70a8a1
+h
+8app/src/main/java/com/dam/ad/notedam/utils/ClearFiles.kt,c\9\c969d5fb5527ded1179e070b9c027c3afd358c04
+c
+3app/src/main/java/com/dam/ad/notedam/utils/Utils.kt,e\e\eea9125d186a32415585fbc1841044733f254ad5

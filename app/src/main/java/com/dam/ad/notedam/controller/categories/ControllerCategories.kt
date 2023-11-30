@@ -13,7 +13,7 @@ import java.util.*
 class ControllerCategories(
     private val repo: IRepositoryCategories,
     private val storage: CategoryStorageService,
-    private val fileName: String,
+    private val filePath: String,
 ): IControllerCategories{
     private var categorySelected: Category? = null
 
@@ -46,20 +46,20 @@ class ControllerCategories(
 
     override fun loadAll(clearBefore: Boolean): Result<Iterable<Category>, CategoryError> {
         if (clearBefore) repo.deleteAll()
-        val categories = storage.loadAll(fileName).onSuccess {
+        val categories = storage.loadAll(filePath).onSuccess {
             repo.saveAll(it)
         }
         return categories
     }
 
     override fun exportAll(): Result<Iterable<Category>, CategoryError> {
-        return storage.saveAll(repo.findAll(), fileName)
+        return storage.exportAll(repo.findAll(), filePath)
     }
 
     override fun save(element: Category): Result<Category, CategoryError> {
         return element.validate().andThen {
             repo.save(element).onSuccess {
-                exportAll()
+                storage.export(element, filePath)
             }
         }
     }
@@ -72,19 +72,19 @@ class ControllerCategories(
 
     override fun deleteById(id: UUID): Result<Boolean, CategoryError> {
         return repo.deleteById(id).onSuccess {
-            exportAll()
+            storage.exportAll(repo.findAll(), filePath, true)
         }
     }
 
     override fun delete(element: Category): Result<Boolean, CategoryError> {
         return repo.delete(element).onSuccess {
-            exportAll()
+            storage.exportAll(repo.findAll(), filePath, true)
         }
     }
 
     override fun deleteAll() {
         repo.deleteAll()
-        exportAll()
+        storage.exportAll(repo.findAll(), filePath, true)
     }
 
     override fun findAll(): Iterable<Category> {

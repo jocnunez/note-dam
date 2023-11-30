@@ -7,6 +7,7 @@ sealed class CategoryError(val message: String){
 
     class ExportError(type: String): CategoryError("Error exporting $type category")
     class ImportError(type: String): CategoryError("Error importing $type category")
+    class RemoveFileError(type: String): CategoryError("Error removing $type category file")
 
     class ValidationError(type: String): CategoryError("Error while validate category: $type")
 }
