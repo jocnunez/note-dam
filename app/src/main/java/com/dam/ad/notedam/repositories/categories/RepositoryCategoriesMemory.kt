@@ -28,7 +28,7 @@ class RepositoryCategoriesMemory: IRepositoryCategories{
         }
     }
 
-    override fun getNotesSortedByPriority(category: Category): Iterable<Category> {
+    override fun getNotesSortedByPriority(): Iterable<Category> {
         return categories.values.sortedBy { it.priority }
     }
 

@@ -9,5 +9,5 @@ import java.util.UUID
 interface IRepositoryCategories: CrudRepository<Category, UUID, CategoryError>{
     fun findByTitle(title: String): Result<Category, CategoryError>
     fun findByPriority(priority: UInt): Result<Category, CategoryError>
-    fun getNotesSortedByPriority(category: Category): Iterable<Category>
+    fun getNotesSortedByPriority(): Iterable<Category>
 }
