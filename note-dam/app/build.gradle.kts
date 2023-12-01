@@ -42,6 +42,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.preference:preference-ktx:1.2.0")
     //NavigationComponent
     val navigationVersion = "2.7.5"
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
