@@ -1,23 +1,38 @@
 package com.dam.ad.notedam.presentation.home
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navController:NavController
+    private lateinit var navController: NavController
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        lifecycleScope.launch { firstTimeInfo() }
+
         setContentView(binding.root)
         initNavMenu()
     }
@@ -28,4 +43,21 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setupWithNavController(navController)
     }
 
+    private suspend fun firstTimeInfo() {
+        val firstTime = booleanPreferencesKey("first_time")
+        this.dataStore.data.map { it[firstTime] ?: true }.collect {
+            if (it) {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Bienvenide a NoteDAM")
+                    setMessage(
+                        "La aplicación usa almacenamiento local por defecto." +
+                                " Esto puede ser cambiado en la configuración."
+                    )
+                    setNeutralButton("Continuar") { _, _ -> }
+                }.show()
+
+                this.dataStore.edit { it[firstTime] = false }
+            }
+        }
+    }
 }
