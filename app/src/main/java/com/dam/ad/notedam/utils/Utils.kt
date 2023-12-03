@@ -15,16 +15,16 @@ class Utils {
          * @param filePath ruta donde se encuentran los ficheros
          * @param fileNameBase nombre base de los ficheros
          */
-        fun clearFilesFn(filesUsing: Iterable<String>, filePath: String, fileNameBase: String): Result<Boolean, CategoryError> {
+        fun clearFilesFn(filesUsing: Iterable<String>, filePath: String, fileNameBase: String, fileType: String): Result<Boolean, CategoryError> {
             val files = File(filePath).listFiles { _, name -> name.endsWith(fileNameBase) }
             try {
                 files?.forEach { file ->
                     if(!filesUsing.contains(file.name) && file.exists() && !file.delete()){
-                        return Err(CategoryError.RemoveFileError("JSON"))
+                        return Err(CategoryError.RemoveFileError(fileType))
                     }
                 }
             }catch (e: Exception){
-                return Err(CategoryError.RemoveFileError("JSON"))
+                return Err(CategoryError.RemoveFileError(fileType))
             }
             return Ok(true)
         }
