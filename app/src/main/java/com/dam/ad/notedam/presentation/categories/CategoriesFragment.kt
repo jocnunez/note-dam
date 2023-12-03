@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CategoriesFragment : Fragment() {
 
-    private var _binding:FragmentCategoriesBinding? = null
+    private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
