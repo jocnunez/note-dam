@@ -1,8 +1,16 @@
 package com.dam.ad.notedam.services.storage.categories
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.dam.ad.notedam.models.Category
+import com.dam.ad.notedam.models.dto.CategoryDto
+import com.dam.ad.notedam.models.dto.NoteDto
 import com.dam.ad.notedam.models.errors.CategoryError
+import com.dam.ad.notedam.models.gson_adapters.CategoryDtoAdapterGson
+import com.dam.ad.notedam.models.gson_adapters.NoteDtoAdapterGson
 import com.dam.ad.notedam.utils.Utils
+import com.dam.ad.notedam.utils.mappers.toCategory
+import com.dam.ad.notedam.utils.mappers.toCategoryDto
 import com.dam.ad.notedam.utils.validators.FileAction
 import com.dam.ad.notedam.utils.validators.validate
 import com.github.michaelbull.result.Err
@@ -10,9 +18,9 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapBoth
 import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class CategoryStorageJson: CategoryStorageService{
     private val fileNameBase = "_categories.json"
     override fun export(element: Category, filePath: String, clearFiles: Boolean): Result<Category, CategoryError> {
@@ -24,8 +32,12 @@ class CategoryStorageJson: CategoryStorageService{
         return file.validate(FileAction.WRITE).mapBoth(
             success = {
                 try{
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val jsonString = gson.toJson(element)
+                    val gson = GsonBuilder()
+                        .setPrettyPrinting()
+                        .registerTypeAdapter(NoteDto::class.java, NoteDtoAdapterGson())
+                        .registerTypeAdapter(CategoryDto::class.java, CategoryDtoAdapterGson())
+                        .create()
+                    val jsonString = gson.toJson(element.toCategoryDto())
                     file.writeText(jsonString)
                     Ok(element)
                 }catch (e: Exception){
@@ -49,8 +61,12 @@ class CategoryStorageJson: CategoryStorageService{
             file.validate(FileAction.WRITE).mapBoth(
                 success = {
                     try{
-                        val gson = GsonBuilder().setPrettyPrinting().create()
-                        val jsonString = gson.toJson(category)
+                        val gson = GsonBuilder()
+                            .setPrettyPrinting()
+                            .registerTypeAdapter(NoteDto::class.java, NoteDtoAdapterGson())
+                            .registerTypeAdapter(CategoryDto::class.java, CategoryDtoAdapterGson())
+                            .create()
+                        val jsonString = gson.toJson(category.toCategoryDto())
                         file.writeText(jsonString)
                     }catch (e: Exception){
                         return Err(CategoryError.ExportError("JSON"))
@@ -71,15 +87,18 @@ class CategoryStorageJson: CategoryStorageService{
         if(files.isNullOrEmpty()){
             return Err(CategoryError.ImportError("JSON"))
         }
-        val categories = mutableListOf<Category>()
+        val categories = mutableListOf<CategoryDto>()
         files.forEach { file ->
             file.validate(FileAction.READ).mapBoth(
                 success = {
                     try{
-                        val gson = GsonBuilder().setPrettyPrinting().create()
+                        val gson = GsonBuilder()
+                            .setPrettyPrinting()
+                            .registerTypeAdapter(NoteDto::class.java, NoteDtoAdapterGson())
+                            .registerTypeAdapter(CategoryDto::class.java, CategoryDtoAdapterGson())
+                            .create()
                         val jsonString = file.readText()
-                        val listType = object : TypeToken<List<Category>>() {}.type
-                        categories.addAll(gson.fromJson(jsonString, listType))
+                        categories.add(gson.fromJson(jsonString, CategoryDto::class.java))
                     }catch (e: Exception){
                         return Err(CategoryError.ImportError("JSON"))
                     }
@@ -89,7 +108,7 @@ class CategoryStorageJson: CategoryStorageService{
                 }
             )
         }
-        return Ok(categories)
+        return Ok(categories.map { it.toCategory() })
     }
 
 }

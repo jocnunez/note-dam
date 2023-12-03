@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import com.dam.ad.notedam.models.Category
 import com.dam.ad.notedam.models.Note
 import com.dam.ad.notedam.models.SublistItem
+import com.dam.ad.notedam.models.dto.CategoryDto
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -12,6 +13,7 @@ fun Category.toCsvRow(): String {
     return "$uuid,$title,$description,$priority,${notes.joinToString("|") { it.toCsvRow(';') }}\n"
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun String.fromCsvRowToCategory(): Category {
     val values = split(",")
     require(values.size == 5) { "Invalid CSV row" }
@@ -45,4 +47,26 @@ fun String.fromCsvRowToNote(separator: Char): Note<*> {
             throw Exception("Type not found")
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun CategoryDto.toCategory(): Category {
+    return Category(
+        uuid = UUID.fromString(uuid),
+        title = title,
+        description = description,
+        priority = priority,
+        notes = notes.map { it.toNote() }
+    )
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun Category.toCategoryDto(): CategoryDto {
+    return CategoryDto(
+        uuid = uuid.toString(),
+        title = title,
+        description = description,
+        priority = priority,
+        notes = notes.map { it.toNoteDto() }
+    )
 }
