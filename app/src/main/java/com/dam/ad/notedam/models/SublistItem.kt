@@ -1,20 +1,19 @@
 package com.dam.ad.notedam.models
 
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.Root
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-@Root(name="subListItem")
+@JacksonXmlRootElement(localName = "subListItem")
 data class SublistItem(
-
-    @field:Element( name ="checkSubList")
-    @param:Element( name ="checkSubList")
+    @field:JacksonXmlProperty(localName = "check")
+    @param:JacksonXmlProperty(localName = "check")
     val check: Boolean,
-
-    @field:Element( name ="valor")
-    @param:Element( name ="valor")
-    val valor: String){
+    @field:JacksonXmlProperty(localName = "subListValue")
+    @param:JacksonXmlProperty(localName = "subListValue")
+    val subListValue: String
+){
 
     fun toCsvRow(separator: Char, tail: Char? = null): String {
-        return "$check$separator$valor${tail ?: ""}"
+        return "$check$separator$subListValue${tail ?: ""}"
     }
 }

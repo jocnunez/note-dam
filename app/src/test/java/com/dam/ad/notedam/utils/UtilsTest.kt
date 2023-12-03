@@ -1,10 +1,8 @@
 package com.dam.ad.notedam.utils
 
-import android.net.Uri
 import com.dam.ad.notedam.models.Category
 import com.dam.ad.notedam.models.Note
 import com.dam.ad.notedam.models.SublistItem
-import java.io.File
 import java.time.LocalDateTime
 
 class UtilsTest {
@@ -27,11 +25,11 @@ class UtilsTest {
                     ),*/
                     Note.Sublist(
                         sublist = listOf(
-                            SublistItem(check = false, valor = "valor1"),
-                            SublistItem(check = false, valor = "valor2"),
-                            SublistItem(check = false, valor = "valor3"),
-                            SublistItem(check = false, valor = "valor4"),
-                            SublistItem(check = false, valor = "valor5"),
+                            SublistItem(check = false, subListValue = "valor1"),
+                            SublistItem(check = false, subListValue = "valor2"),
+                            SublistItem(check = false, subListValue = "valor3"),
+                            SublistItem(check = false, subListValue = "valor4"),
+                            SublistItem(check = false, subListValue = "valor5"),
                         ),
                         check = false,
                         fechaCreate = LocalDateTime.now()

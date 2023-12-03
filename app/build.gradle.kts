@@ -67,5 +67,11 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     //SimpleXml
-    implementation("org.simpleframework:simple-xml:2.7.1")
+    // implementation("org.simpleframework:simple-xml:2.7.1")
+
+    // Jackson
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 }

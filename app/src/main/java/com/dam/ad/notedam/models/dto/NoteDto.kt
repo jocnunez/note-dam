@@ -1,41 +1,35 @@
 package com.dam.ad.notedam.models.dto
 
 import com.dam.ad.notedam.models.SublistItem
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.ElementList
-import org.simpleframework.xml.Root
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-@Root(name="note")
+@JacksonXmlRootElement(localName = "note")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 data class NoteDto(
-    @field:Element( name ="uuid")
-    @param:Element( name ="uuid")
-    val uuid: String,
-
-    @field:Element( name ="type")
-    @param:Element( name ="type")
-    val type: String,
-
-    @field:Element( name ="fechaCreate")
-    @param:Element( name ="fechaCreate")
-    val fechaCreate: String,
-
-    @field:Element( name ="check")
-    @param:Element( name ="check")
-    val check: Boolean,
-
-    @field:Element( name ="text", required = false)
-    @param:Element( name ="text", required = false)
+    @field:JacksonXmlProperty(localName = "noteId")
+    @param:JacksonXmlProperty(localName = "noteId")
+    val uuid: String = "",
+    @field:JacksonXmlProperty(localName = "type")
+    @param:JacksonXmlProperty(localName = "type")
+    val type: String = "",
+    @field:JacksonXmlProperty(localName = "fechaCreate")
+    @param:JacksonXmlProperty(localName = "fechaCreate")
+    val fechaCreate: String = "",
+    @field:JacksonXmlProperty(localName = "check")
+    @param:JacksonXmlProperty(localName = "check")
+    val check: Boolean = false,
+    @field:JacksonXmlProperty(localName = "text")
+    @param:JacksonXmlProperty(localName = "text")
     val text: String? = null,
-
-    @field:Element( name ="image", required = false)
-    @param:Element( name ="image", required = false)
+    @field:JacksonXmlProperty(localName = "image")
+    @param:JacksonXmlProperty(localName = "image")
     val image: String? = null,
-
-    @field:Element( name ="audio", required = false)
-    @param:Element( name ="audio", required = false)
+    @field:JacksonXmlProperty(localName = "audio")
+    @param:JacksonXmlProperty(localName = "audio")
     val audio: String? = null,
-
-    @field:ElementList( name ="uuid", required = false)
-    @param:ElementList( name ="uuid", required = false)
+    @field:JacksonXmlProperty(localName = "sublist")
+    @param:JacksonXmlProperty(localName = "sublist")
     val subList: List<SublistItem>? = null
 )

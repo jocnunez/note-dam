@@ -18,28 +18,32 @@ abstract class CategoryStorageGenericTest {
     @After
     fun tearDown() {
         // Borrar ficheros
-       // Utils.clearFilesFn(listOf(), filePath(), getFileNameTail(),"")
+        Utils.clearFilesFn(listOf(), filePath(), getFileNameTail(),"")
     }
 
     @Test
     fun exportTest() {
         val category = getCategoryDefault().first()
-        getStorage().export(category, filePath(), true)
+        val result = getStorage().export(category, filePath(), true)
 
         // Comprobar que el fichero existe
         val file = File(filePath() + category.uuid + getFileNameTail())
         assertTrue(file.exists() && file.canWrite())
+        assertNull(result.getError())
+        assertNotNull(result.get())
     }
 
     @Test
     fun exportAllTest() {
-        getStorage().exportAll(getCategoryDefault(), filePath(), true)
+        val result = getStorage().exportAll(getCategoryDefault(), filePath(), true)
 
         // Comprobar que el fichero existe
         val file = File(filePath() + getCategoryDefault().first().uuid + getFileNameTail())
         val file2 = File(filePath() + getCategoryDefault().last().uuid + getFileNameTail())
         assertTrue(file.exists() && file.canWrite())
         assertTrue(file2.exists() && file2.canWrite())
+        assertNull(result.getError())
+        assertNotNull(result.get())
     }
 
     @Test

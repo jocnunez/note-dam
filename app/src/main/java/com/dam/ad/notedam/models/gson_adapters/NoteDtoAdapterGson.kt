@@ -21,7 +21,7 @@ class NoteDtoAdapterGson : JsonSerializer<NoteDto>, JsonDeserializer<NoteDto> {
             sublist.forEach { sublistItem ->
                 val sublistItemObject = JsonObject()
                 sublistItemObject.addProperty("check", sublistItem.check)
-                sublistItemObject.addProperty("valor", sublistItem.valor)
+                sublistItemObject.addProperty("valor", sublistItem.subListValue)
                 sublistArray.add(sublistItemObject)
             }
             jsonObject.add("subList", sublistArray)

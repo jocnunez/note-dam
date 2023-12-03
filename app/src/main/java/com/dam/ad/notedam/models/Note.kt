@@ -4,9 +4,6 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.dam.ad.notedam.utils.mappers.fromCsvRowToSublistItem
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.ElementList
-import org.simpleframework.xml.Root
 import java.io.File
 import java.time.LocalDateTime
 import java.util.UUID

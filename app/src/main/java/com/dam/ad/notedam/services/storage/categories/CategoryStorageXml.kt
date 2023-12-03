@@ -3,25 +3,24 @@ package com.dam.ad.notedam.services.storage.categories
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.dam.ad.notedam.models.Category
-import com.dam.ad.notedam.models.dto.CategoriesXmlDto
 import com.dam.ad.notedam.models.dto.CategoryDto
 import com.dam.ad.notedam.models.errors.CategoryError
-import com.dam.ad.notedam.services.storage.StorageService
 import com.dam.ad.notedam.utils.Utils
 import com.dam.ad.notedam.utils.mappers.toCategory
 import com.dam.ad.notedam.utils.mappers.toCategoryDto
 import com.dam.ad.notedam.utils.validators.FileAction
 import com.dam.ad.notedam.utils.validators.validate
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
+import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapBoth
-import org.simpleframework.xml.core.Persister
 import java.io.File
-import java.lang.Error
 
 @RequiresApi(Build.VERSION_CODES.O)
-
 class CategoryStorageXml: CategoryStorageService {
     private val fileNameBase = "_categories.xml"
 
@@ -33,9 +32,17 @@ class CategoryStorageXml: CategoryStorageService {
         val file = File(fileUsing)
         return file.validate(FileAction.WRITE).mapBoth(
             success = {
+                val xmlMapper = XmlMapper(
+                    JacksonXmlModule().apply { setDefaultUseWrapper(false) }
+                ).apply {
+                    enable(SerializationFeature.INDENT_OUTPUT)
+                    enable(SerializationFeature.WRAP_ROOT_VALUE)
+                    enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
+                }
+
                 try{
-                    val persister = Persister()
-                    persister.write(element.toCategoryDto(),file)
+                    val dto = element.toCategoryDto()
+                    xmlMapper.writeValue(file,dto)
                     Ok(element)
                 }catch (e: Exception){
                     Err(CategoryError.ExportError("XML"))
@@ -57,14 +64,22 @@ class CategoryStorageXml: CategoryStorageService {
             Utils.clearFilesFn(fileUsing, filePath, fileNameBase, "XML")
         }
         elements.forEach { category ->
-        val file = File(filePath+category.uuid+fileNameBase)
+            val file = File(filePath+category.uuid+fileNameBase)
             file.validate(FileAction.WRITE).mapBoth(
                 success = {
+                    val xmlMapper = XmlMapper(
+                        JacksonXmlModule().apply { setDefaultUseWrapper(false) }
+                    ).apply {
+                        enable(SerializationFeature.INDENT_OUTPUT)
+                        enable(SerializationFeature.WRAP_ROOT_VALUE)
+                        enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
+                    }
+
                     try{
-                        val persister = Persister()
-                        persister.write(category.toCategoryDto(),file)
+                        val dto = category.toCategoryDto()
+                        xmlMapper.writeValue(file,dto)
                     }catch (e: Exception){
-                       return Err(CategoryError.ExportError("XML"))
+                        return Err(CategoryError.ExportError("XML"))
                     }
                 },
                 failure = {
@@ -87,9 +102,17 @@ class CategoryStorageXml: CategoryStorageService {
         files.forEach { file->
             file.validate(FileAction.READ).mapBoth(
                 success = {
+                    val xmlMapper = XmlMapper(
+                        JacksonXmlModule().apply { setDefaultUseWrapper(false) }
+                    ).apply {
+                        enable(SerializationFeature.INDENT_OUTPUT)
+                        enable(SerializationFeature.WRAP_ROOT_VALUE)
+                        enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
+                    }
+
                     try{
-                        val persister = Persister()
-                       categories.add(persister.read(CategoryDto::class.java,file))
+                        val dto = xmlMapper.readValue(file,CategoryDto::class.java)
+                        categories.add(dto)
                     }catch (e: Exception){
                         return Err(CategoryError.ImportError("XML"))
                     }

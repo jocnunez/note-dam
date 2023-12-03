@@ -11,7 +11,7 @@ class CategoryDtoAdapterGson : JsonSerializer<CategoryDto>, JsonDeserializer<Cat
         jsonObject.addProperty("uuid", src.uuid)
         jsonObject.addProperty("title", src.title)
         jsonObject.addProperty("description", src.description)
-        jsonObject.addProperty("priority", src.priority.toInt())
+        jsonObject.addProperty("priority", src.level.toInt())
 
         val notesArray = JsonArray()
         src.notes.forEach { note ->
@@ -27,7 +27,7 @@ class CategoryDtoAdapterGson : JsonSerializer<CategoryDto>, JsonDeserializer<Cat
         val uuid = jsonObject["uuid"].asString
         val title = jsonObject["title"].asString
         val description = jsonObject["description"].asString
-        val priority = jsonObject["priority"].asInt.toUInt()
+        val priority = jsonObject["priority"].asInt
 
         val notes = if (jsonObject.has("notes")) {
             val notesArray = jsonObject.getAsJsonArray("notes")

@@ -31,7 +31,7 @@ fun String.fromCsvRowToSublistItem(separator: Char): SublistItem {
     require(values.size == 2) { "Invalid CSV row" }
     return SublistItem(
         check = values[0].toBoolean(),
-        valor = values[1]
+        subListValue = values[1]
     )
 }
 
@@ -55,7 +55,7 @@ fun CategoryDto.toCategory(): Category {
         uuid = UUID.fromString(uuid),
         title = title,
         description = description,
-        priority = priority,
+        priority = level.toUInt(),
         notes = notes.map { it.toNote() }
     )
 }
@@ -66,7 +66,7 @@ fun Category.toCategoryDto(): CategoryDto {
         uuid = uuid.toString(),
         title = title,
         description = description,
-        priority = priority,
+        level = priority.toInt(),
         notes = notes.map { it.toNoteDto() }
     )
 }
