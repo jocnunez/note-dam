@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- Fondo blanco (puedes ajustar el color según tus preferencias) -->
+	<item android:drawable="@android:color/holo_green_light" />
+
+	<!-- Borde -->
+	<item
+			android:left="2dp"
+			android:right="2dp"
+			android:top="2dp"
+			android:bottom="2dp">
+		<shape android:shape="rectangle">
+			<solid android:color="#111111" />
+			<stroke
+					android:width="1dp"
+					android:color="#000000" />
+		</shape>
+	</item>
+</layer-list>
+

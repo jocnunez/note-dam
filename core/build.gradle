@@ -1,0 +1,13 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+dependencies {
+    //XML
+    implementation("org.simpleframework:simple-xml:2.7.1")
+}
+
+kotlin {
+    jvmToolchain(8)
+}
+

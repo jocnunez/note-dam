@@ -1,0 +1,12 @@
+<resources>
+    <string-array name="data_sources_entries">
+        <item>CSV</item>
+        <item>JSON</item>
+        <item>XML</item>
+    </string-array>
+    <string-array name="data_sources_values">
+        <item>CSV</item>
+        <item>JSON</item>
+        <item>XML</item>
+    </string-array>
+</resources>

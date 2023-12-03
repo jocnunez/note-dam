@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="8dp"
+		android:gravity="center"
+		android:background="@drawable/border_background"
+		android:layout_marginBottom="20dp">
+
+	<TextView
+			android:id="@+id/titleTodo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+			android:textSize="15sp"
+			android:text="NOTA NUEVA"/>
+
+	<!-- Texto -->
+	<TextView
+			android:id="@+id/textViewTodo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Texto"/>
+
+	<!-- Imagen -->
+	<ImageView
+			android:id="@+id/imageTodo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_launcher_background"
+			android:layout_marginTop="8dp"/>
+
+	<!-- Audio -->
+	<Button
+			android:id="@+id/buttonAudioTodo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Reproducir Audio"
+			android:layout_marginTop="8dp"/>
+
+	<!-- Sublista -->
+	<!-- No se puede hacer scroll dentro -->
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerViewSublist"
+			tools:listitem="@layout/todo_sublist"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:itemCount="3"
+			android:layout_marginTop="8dp"/>
+
+	<CheckBox
+			android:clickable="false"
+			android:focusable="false"
+			android:enabled="false"
+			android:id="@+id/checkBoxComplete" android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="Completado"/>
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ListPreference para seleccionar -->
+    <ListPreference
+            android:key="data_source"
+            android:title="Data Source"
+            android:summary="Select data source"
+            android:dialogTitle="Select Data Source"
+            android:entries="@array/data_sources_entries"
+            android:entryValues="@array/data_sources_values"/>
+
+</androidx.preference.PreferenceScreen>

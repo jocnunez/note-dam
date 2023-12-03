@@ -14,4 +14,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "NoteDAM"
-include(":app")
+include(":app", ":core")
