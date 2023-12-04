@@ -29,7 +29,7 @@ class ControllerCategories(
     override fun addNoteToSelectedCategory(note: Note<*>): Result<Note<*>, NoteError> {
         // Falta validar que la nota
         if (categorySelected == null) return Err(NoteError.NoteNotSaved())
-        categorySelected?.notes?.add(note)
+        categorySelected?.notes?.set(note.uuid, (note))
         save(categorySelected!!).mapBoth(
             success = { return Ok(note) },
             failure = { return Err(NoteError.NoteNotSaved()) }
@@ -38,7 +38,7 @@ class ControllerCategories(
 
     override fun removeNoteFromSelectedCategory(note: Note<*>): Result<Note<*>, NoteError> {
         if (categorySelected == null) return Err(NoteError.NoteNotDeleted())
-        categorySelected?.notes?.remove(note)
+        categorySelected?.notes?.remove(note.uuid)
         save(categorySelected!!).mapBoth(
             success = { return Ok(note) },
             failure = { return Err(NoteError.NoteNotDeleted()) }
@@ -46,14 +46,14 @@ class ControllerCategories(
     }
 
     override fun addItemToSublist(note: Note.Sublist, item: SublistItem): Result<SublistItem, NoteError> {
-        (categorySelected?.notes?.find { it.uuid == note.uuid } as Note.Sublist).sublist.toMutableList().add(item)
+        (categorySelected?.notes?.get(note.uuid) as Note.Sublist).sublist[item.subListValue] = item
         save(categorySelected!!).mapBoth(
             success = { return Ok(item) },
             failure = { return Err(NoteError.NoteNotDeleted()) })
     }
 
     override fun removeItemFromSublist(note: Note.Sublist, item: SublistItem): Result<SublistItem, NoteError> {
-        (categorySelected?.notes?.find { it.uuid == note.uuid } as Note.Sublist).sublist.toMutableList().remove(item)
+        (categorySelected?.notes?.get(note.uuid) as Note.Sublist).sublist.remove(item.subListValue)
         save(categorySelected!!).mapBoth(
             success = { return Ok(item) },
             failure = { return Err(NoteError.NoteNotDeleted()) })

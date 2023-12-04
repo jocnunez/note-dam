@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private lateinit var state: State
-    private val format: Format = Format.XML
+    private val format: Format = Format.CSV
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

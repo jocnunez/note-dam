@@ -208,7 +208,7 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
                             text: String
                         ) {
                             val sublistItem = SublistItem(false, text)
-                            item.sublist.toMutableList().add(sublistItem)
+                            item.sublist[sublistItem.subListValue] = sublistItem
                             mAdapter.add(sublistItem)
                             state.categoryController.addItemToSublist(note, sublistItem)
                         }
@@ -225,7 +225,7 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
                 state.categoryController.addNoteToSelectedCategory(newItem)
             }
 
-            val list = item.sublist.toMutableList()
+            val list = item.sublist.values.toMutableList()
             mAdapter = ItemSublistAdapter(list, this, state, item)
 
             binding.sublistRecycler.apply {
@@ -284,7 +284,6 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
         if (index != -1) {
             listItem.removeAt(index)
             notifyItemRemoved(index)
-            notifyDataSetChanged()
         }
     }
 

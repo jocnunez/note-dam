@@ -10,7 +10,7 @@ import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun Category.toCsvRow(): String {
-    return "$uuid,$title,$description,$priority,${notes.joinToString("|") { it.toCsvRow(';') }}\n"
+    return "$uuid,$title,$description,$priority,${notes.values.joinToString("|") { it.toCsvRow(';') }}\n"
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -23,7 +23,8 @@ fun String.fromCsvRowToCategory(): Category {
         title = values[1],
         description = values[2],
         priority = values[3].toUInt(),
-        notes = if (notes.isEmpty()) mutableListOf() else notes.split("|").map { it.fromCsvRowToNote(';') }.toMutableList()
+        notes = if (notes.isEmpty()) mutableMapOf() else notes.split("|")
+            .map { it.fromCsvRowToNote(';') }.associateBy { it.uuid }.toMutableMap()
     )
 }
 
@@ -57,7 +58,7 @@ fun CategoryDto.toCategory(): Category {
         title = title,
         description = description,
         priority = level.toUInt(),
-        notes = notes?.map { it.toNote() }?.toMutableList() ?: mutableListOf()
+        notes = notes?.map { it.toNote() }?.associateBy { it.uuid }?.toMutableMap() ?: mutableMapOf()
     )
 }
 
@@ -68,6 +69,6 @@ fun Category.toCategoryDto(): CategoryDto {
         title = title,
         description = description,
         level = priority.toInt(),
-        notes = notes.map { it.toNoteDto() }
+        notes = notes.values.map { it.toNoteDto() }
     )
 }
