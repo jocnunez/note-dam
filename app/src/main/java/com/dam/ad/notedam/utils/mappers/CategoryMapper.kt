@@ -16,13 +16,14 @@ fun Category.toCsvRow(): String {
 @RequiresApi(Build.VERSION_CODES.O)
 fun String.fromCsvRowToCategory(): Category {
     val values = split(",")
+    val notes = values[4]
     require(values.size == 5) { "Invalid CSV row" }
     return Category(
         uuid = UUID.fromString(values[0]),
         title = values[1],
         description = values[2],
         priority = values[3].toUInt(),
-        notes = values[4].split("|").map { it.fromCsvRowToNote(';') }
+        notes = if (notes.isEmpty()) mutableListOf() else notes.split("|").map { it.fromCsvRowToNote(';') }.toMutableList()
     )
 }
 
@@ -42,7 +43,7 @@ fun String.fromCsvRowToNote(separator: Char): Note<*> {
         "text" -> Note.Text.fromCsvRowToNote(values)
         "image" -> Note.Image.fromCsvRowToNote(values)
         "audio" -> Note.Audio.fromCsvRowToNote(values)
-        "sublist" -> Note.Sublist.fromCsvRowToNote(values, ':')
+        "sublist" -> Note.Sublist.fromCsvRowToNote(values, "::")
         else -> {
             throw Exception("Type not found")
         }
@@ -56,7 +57,7 @@ fun CategoryDto.toCategory(): Category {
         title = title,
         description = description,
         priority = level.toUInt(),
-        notes = notes.map { it.toNote() }
+        notes = notes?.map { it.toNote() }?.toMutableList() ?: mutableListOf()
     )
 }
 

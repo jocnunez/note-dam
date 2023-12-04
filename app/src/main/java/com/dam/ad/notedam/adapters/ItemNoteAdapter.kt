@@ -22,13 +22,14 @@ import com.dam.ad.notedam.databinding.ItemSublistLayoutBinding
 import com.dam.ad.notedam.databinding.ItemTextLayoutBinding
 import com.dam.ad.notedam.dialogs.NoteAlertDialog
 import com.dam.ad.notedam.models.Note
+import com.dam.ad.notedam.models.State
 import com.dam.ad.notedam.models.SublistItem
 import com.dam.ad.notedam.presentation.home.MainActivity
 import java.io.File
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
-class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var listener: OnElementClickListener<Note<*>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var listener: OnElementClickListener<Note<*>>, val state: State) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -108,6 +109,11 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
             binding.text.text = item.text
             binding.date.text = item.fechaCreate.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
             binding.checkbox.isChecked = item.check
+
+            binding.checkbox.setOnClickListener {
+                val newItem = item.copy(check = binding.checkbox.isChecked)
+                state.categoryController.addNoteToSelectedCategory(newItem)
+            }
         }
 
         fun setListener(item: Note.Text) {
@@ -129,7 +135,7 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
         fun bind(item: Note.Image) {
             try {
                 Glide.with(binding.image)
-                    .load(item.image.toString())
+                    .load(item.image)
                     .transform(CenterCrop(), RoundedCorners(30))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.image)
@@ -138,6 +144,11 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
             }
             binding.date.text = item.fechaCreate.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
             binding.checkbox.isChecked = item.check
+
+            binding.checkbox.setOnClickListener {
+                val newItem = item.copy(check = binding.checkbox.isChecked)
+                state.categoryController.addNoteToSelectedCategory(newItem)
+            }
         }
 
         fun setListener(item: Note.Image) {
@@ -160,6 +171,10 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
             binding.link.text = item.audio.toString()
             binding.date.text = item.fechaCreate.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
             binding.checkbox.isChecked = item.check
+            binding.checkbox.setOnClickListener {
+                val newItem = item.copy(check = binding.checkbox.isChecked)
+                state.categoryController.addNoteToSelectedCategory(newItem)
+            }
         }
 
         fun setListener(item: Note.Audio) {
@@ -178,10 +193,12 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
 
         private val binding = ItemSublistLayoutBinding.bind(view)
         private lateinit var mAdapter: ItemSublistAdapter
+        private lateinit var note: Note.Sublist
 
         fun bind(item: Note.Sublist) {
             binding.date.text = item.fechaCreate.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
             binding.checkbox.isChecked = item.check
+            note = item
 
             binding.anadir.setOnClickListener {
                 NoteAlertDialog.showElementAlertDialog(
@@ -190,11 +207,10 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
                         override fun onPositiveButtonClick(
                             text: String
                         ) {
-
                             val sublistItem = SublistItem(false, text)
                             item.sublist.toMutableList().add(sublistItem)
                             mAdapter.add(sublistItem)
-
+                            state.categoryController.addItemToSublist(note, sublistItem)
                         }
 
                         override fun onNegativeButtonClick() {
@@ -204,8 +220,13 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
                 )
             }
 
+            binding.checkbox.setOnClickListener {
+                val newItem = item.copy(check = binding.checkbox.isChecked)
+                state.categoryController.addNoteToSelectedCategory(newItem)
+            }
+
             val list = item.sublist.toMutableList()
-            mAdapter = ItemSublistAdapter(list, this)
+            mAdapter = ItemSublistAdapter(list, this, state, item)
 
             binding.sublistRecycler.apply {
                 layoutManager = LinearLayoutManager(binding.root.context)
@@ -236,7 +257,7 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
                 .setMessage("¿Estás seguro de que deseas borrar esta tarea?")
 
             builder.setPositiveButton("Sí") { _, _ ->
-//                state.categoryController.delete(item)
+                state.categoryController.removeItemFromSublist(note, item)
                 mAdapter.delete(item)
             }
 
@@ -263,6 +284,7 @@ class ItemNoteAdapter(private var listItem: MutableList<Note<*>>, private var li
         if (index != -1) {
             listItem.removeAt(index)
             notifyItemRemoved(index)
+            notifyDataSetChanged()
         }
     }
 

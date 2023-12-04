@@ -14,7 +14,7 @@ class CategoryDtoAdapterGson : JsonSerializer<CategoryDto>, JsonDeserializer<Cat
         jsonObject.addProperty("priority", src.level.toInt())
 
         val notesArray = JsonArray()
-        src.notes.forEach { note ->
+        src.notes!!.forEach { note ->
             notesArray.add(context.serialize(note))
         }
         jsonObject.add("notes", notesArray)

@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initNavMenu()
+        state.categoryController.loadAll()
     }
 
     private fun initNavMenu() {
