@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var state: State
     private val format: Format = Format.XML
-    private val filePath = "${System.getProperty("user.dir")}${File.separator}"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

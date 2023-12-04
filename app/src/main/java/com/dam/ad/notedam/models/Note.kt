@@ -37,10 +37,10 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
     data class Image(
 
         override val uuid: UUID = UUID.randomUUID(),
-        var image: Uri,
+        var image: String,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
-    ): Note<Uri>(uuid, image, fechaCreate, check) {
+    ): Note<String>(uuid, image, fechaCreate, check) {
         override fun toCsvRow(separator: Char, tail: Char?): String {
             return "image$separator$uuid$separator$image$separator$check$separator$fechaCreate${tail ?: ""}"
         }
@@ -49,7 +49,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
             fun fromCsvRowToNote(values: List<String>): Image {
                 return Image(
                     uuid = UUID.fromString(values[1]),
-                    image = Uri.parse(values[2]),
+                    image = values[2],
                     check = values[3].toBoolean(),
                     fechaCreate = LocalDateTime.parse(values[4])
                 )

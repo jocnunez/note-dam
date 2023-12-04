@@ -99,7 +99,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
                                         override fun onPositiveButtonClick(text: String) {
                                             val item = Note.Image(
                                                 UUID.randomUUID(),
-                                                Uri.parse(text),
+                                                text,
                                                 false,
                                                 LocalDateTime.now()
                                             )
@@ -213,7 +213,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
                                 object : NoteAlertDialog.NoteAlertListener {
                                     override fun onPositiveButtonClick(text: String) {
 
-                                        item.image = Uri.parse(text)
+                                        item.image = text
 
                                         state.categoryController.addNoteToSelectedCategory(item)
                                         state.categoryController.getCategorySelected()?.notes?.toMutableList()
