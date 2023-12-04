@@ -9,7 +9,7 @@
         android:id="@+id/categoriesFragment"
         android:name="com.dam.ad.notedam.presentation.categories.CategoriesFragment"
         android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_categories"/>
     <fragment
         android:id="@+id/todosFragment"
         android:name="com.dam.ad.notedam.presentation.todos.TodosFragment"

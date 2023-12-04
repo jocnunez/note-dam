@@ -74,4 +74,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }
