@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">NoteDAM</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Bottom nav menu -->
     <string name="categories_title">Categories</string>
     <string name="todos_title">ToDos</string>
     <string name="settings_title">Settings</string>
+
+    <!-- First run alert -->
+    <string name="welcome">Bienvenide a NoteDAM</string>
+    <string name="welcome_message">"La aplicación usa almacenamiento local por defecto. Esto puede ser cambiado en la configuración."</string>
 
     <!-- Categories -->
     <string name="categories_select">Selecciona una categoría</string>
