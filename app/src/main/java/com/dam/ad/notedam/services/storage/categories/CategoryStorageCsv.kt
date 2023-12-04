@@ -72,7 +72,7 @@ class CategoryStorageCsv: CategoryStorageService {
         //Todos los ficheros que terminen en _categories.csv
         val files = File(filePath).listFiles { _, name -> name.endsWith(fileNameBase) }
         if(files.isNullOrEmpty()){
-            return Err(CategoryError.ImportError("JSON"))
+            return Err(CategoryError.ImportError("CSV"))
         }
         val categories = mutableListOf<Category>()
         files.forEach { file ->

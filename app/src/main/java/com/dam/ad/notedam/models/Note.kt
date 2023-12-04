@@ -14,7 +14,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
 
     data class Text(
         override val uuid: UUID = UUID.randomUUID(),
-        var text: String,
+        val text: String,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
     ): Note<String>(uuid, text, fechaCreate, check){
@@ -37,7 +37,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
     data class Image(
 
         override val uuid: UUID = UUID.randomUUID(),
-        var image: String,
+        val image: String,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
     ): Note<String>(uuid, image, fechaCreate, check) {
@@ -60,12 +60,12 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
     data class Audio(
 
         override val uuid: UUID = UUID.randomUUID(),
-        var audio: File,
+        val audio: File,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
     ): Note<File>(uuid, audio, fechaCreate, check) {
         override fun toCsvRow(separator: Char, tail: Char?): String {
-            return "audio$separator${audio.path}$separator$check$separator$fechaCreate${tail ?: ""}"
+            return "audio$separator$uuid$separator${audio.path}$separator$check$separator$fechaCreate${tail ?: ""}"
         }
 
         companion object{
@@ -88,16 +88,16 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
     ): Note<Iterable<SublistItem>>(uuid, sublist, fechaCreate, check) {
         override fun toCsvRow(separator: Char, tail: Char?): String {
             return "sublist$separator$uuid$separator${
-                sublist.joinToString(separator = ":", transform = { it.toCsvRow('¬')})
+                sublist.joinToString(separator = "::", transform = { it.toCsvRow('¬')})
             }$separator$check$separator$fechaCreate${tail ?: ""}"
         }
 
         companion object{
-            fun fromCsvRowToNote(values: List<String>, separator: Char): Sublist {
+            fun fromCsvRowToNote(values: List<String>, separator: String): Sublist {
+                val sublist = values[2]
                 return Sublist(
                     uuid = UUID.fromString(values[1]),
-                    sublist = values[2].split(':')
-                        .map { it.fromCsvRowToSublistItem('¬') },
+                    sublist = if (sublist.isEmpty()) listOf() else sublist.split("::").map { it.fromCsvRowToSublistItem('¬') },
                     check = values[3].toBoolean(),
                     fechaCreate = LocalDateTime.parse(values[4])
                 )

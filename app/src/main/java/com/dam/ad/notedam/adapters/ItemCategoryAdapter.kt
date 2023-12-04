@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ItemCategoryLayoutBinding
 import com.dam.ad.notedam.models.Category
+import com.dam.ad.notedam.models.State
 
-class ItemCategoryAdapter(private var listItem: MutableList<Category>, private var listener: OnElementClickListener<Category>) : RecyclerView.Adapter<ItemCategoryAdapter.ViewHolder>() {
+class ItemCategoryAdapter(private var listItem: MutableList<Category>, private var listener: OnElementClickListener<Category>, val state: State) : RecyclerView.Adapter<ItemCategoryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category_layout, parent, false)
@@ -36,6 +37,7 @@ class ItemCategoryAdapter(private var listItem: MutableList<Category>, private v
             binding.priority.text = item.priority.toString()
             binding.upButton.setOnClickListener {
                 item.priority += 1u
+                state.categoryController.save(item)
                 binding.priority.text = item.priority.toString()
                 listItem.sortBy { it.priority }
                 notifyDataSetChanged()
@@ -43,6 +45,7 @@ class ItemCategoryAdapter(private var listItem: MutableList<Category>, private v
             binding.downButton.setOnClickListener {
                 if (item.priority > 0u) {
                     item.priority -= 1u
+                    state.categoryController.save(item)
                     binding.priority.text = item.priority.toString()
                     listItem.sortBy { it.priority }
                     notifyDataSetChanged()

@@ -47,7 +47,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
         nav = (requireActivity() as MainActivity).getNav()
         nav.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.todosFragment) {
-                state.categoryController.getCategorySelected()?.notes?.toMutableList()?.let { mAdapter.setNotes(it) }
+                state.categoryController.getCategorySelected()?.notes?.let { mAdapter.setNotes(it) }
             }
         }
         return binding.root
@@ -160,9 +160,9 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
 
     private fun setRecyclerView() {
 
-        val list = state.categoryController.getCategorySelected()?.notes?.toMutableList() ?: mutableListOf()
+        val list = state.categoryController.getCategorySelected()?.notes ?: mutableListOf()
 
-        mAdapter = ItemNoteAdapter(list, this)
+        mAdapter = ItemNoteAdapter(list, this, state)
         mLayoutManager = LinearLayoutManager(requireContext())
 
         binding.todoCategory.apply {
@@ -193,10 +193,10 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
                                 requireContext(),
                                 object : NoteAlertDialog.NoteAlertListener {
                                     override fun onPositiveButtonClick(text: String) {
-                                        item.text = text
+                                        val newItem = item.copy(text = text)
 
-                                        state.categoryController.addNoteToSelectedCategory(item)
-                                        state.categoryController.getCategorySelected()?.notes?.toMutableList()
+                                        state.categoryController.addNoteToSelectedCategory(newItem)
+                                        state.categoryController.getCategorySelected()?.notes
                                             ?.let { notes -> mAdapter.setNotes(notes) }
 
                                     }
@@ -213,10 +213,10 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
                                 object : NoteAlertDialog.NoteAlertListener {
                                     override fun onPositiveButtonClick(text: String) {
 
-                                        item.image = text
+                                        val newItem = item.copy(image = text)
 
-                                        state.categoryController.addNoteToSelectedCategory(item)
-                                        state.categoryController.getCategorySelected()?.notes?.toMutableList()
+                                        state.categoryController.addNoteToSelectedCategory(newItem)
+                                        state.categoryController.getCategorySelected()?.notes
                                             ?.let { notes -> mAdapter.setNotes(notes) }
 
                                     }
@@ -224,7 +224,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
                                     override fun onNegativeButtonClick() {
                                     }
                                 },
-                                item.image.toString()
+                                item.image
                             )
                         }
                         is Note.Audio -> {
@@ -232,10 +232,10 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
                                 requireContext(),
                                 object : NoteAlertDialog.NoteAlertListener {
                                     override fun onPositiveButtonClick(text: String) {
-                                        item.audio = File(text)
+                                        val newItem = item.copy(audio = File(text))
 
                                         state.categoryController.addNoteToSelectedCategory(item)
-                                        state.categoryController.getCategorySelected()?.notes?.toMutableList()
+                                        state.categoryController.getCategorySelected()?.notes
                                             ?.let { notes -> mAdapter.setNotes(notes) }
 
                                     }

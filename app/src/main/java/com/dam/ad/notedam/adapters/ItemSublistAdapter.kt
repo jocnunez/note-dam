@@ -8,9 +8,11 @@ import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ItemCategoryLayoutBinding
 import com.dam.ad.notedam.databinding.ItemSublistItemLayoutBinding
 import com.dam.ad.notedam.models.Category
+import com.dam.ad.notedam.models.Note
+import com.dam.ad.notedam.models.State
 import com.dam.ad.notedam.models.SublistItem
 
-class ItemSublistAdapter(private var listItem: MutableList<SublistItem>, private var listener: OnElementClickListener<SublistItem>) : RecyclerView.Adapter<ItemSublistAdapter.ViewHolder>() {
+class ItemSublistAdapter(private var listItem: MutableList<SublistItem>, private var listener: OnElementClickListener<SublistItem>, val state: State, val sublist: Note.Sublist) : RecyclerView.Adapter<ItemSublistAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_sublist_item_layout, parent, false)
@@ -34,6 +36,11 @@ class ItemSublistAdapter(private var listItem: MutableList<SublistItem>, private
         fun bind(item: SublistItem) {
             binding.text.text = item.subListValue
             binding.checkbox.isChecked = item.check
+
+            binding.checkbox.setOnClickListener {
+                val newItem = item.copy(check = binding.checkbox.isChecked)
+                state.categoryController.addItemToSublist(sublist, newItem)
+            }
         }
 
         fun setListener(item: SublistItem) {

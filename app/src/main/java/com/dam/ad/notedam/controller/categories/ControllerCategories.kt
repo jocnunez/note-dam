@@ -2,6 +2,7 @@ package com.dam.ad.notedam.controller.categories
 
 import com.dam.ad.notedam.models.Category
 import com.dam.ad.notedam.models.Note
+import com.dam.ad.notedam.models.SublistItem
 import com.dam.ad.notedam.models.errors.CategoryError
 import com.dam.ad.notedam.models.errors.NoteError
 import com.dam.ad.notedam.repositories.categories.IRepositoryCategories
@@ -28,7 +29,7 @@ class ControllerCategories(
     override fun addNoteToSelectedCategory(note: Note<*>): Result<Note<*>, NoteError> {
         // Falta validar que la nota
         if (categorySelected == null) return Err(NoteError.NoteNotSaved())
-        categorySelected?.notes?.toMutableList()?.add(note)
+        categorySelected?.notes?.add(note)
         save(categorySelected!!).mapBoth(
             success = { return Ok(note) },
             failure = { return Err(NoteError.NoteNotSaved()) }
@@ -37,11 +38,25 @@ class ControllerCategories(
 
     override fun removeNoteFromSelectedCategory(note: Note<*>): Result<Note<*>, NoteError> {
         if (categorySelected == null) return Err(NoteError.NoteNotDeleted())
-        categorySelected?.notes?.toMutableList()?.remove(note)
+        categorySelected?.notes?.remove(note)
         save(categorySelected!!).mapBoth(
             success = { return Ok(note) },
             failure = { return Err(NoteError.NoteNotDeleted()) }
         )
+    }
+
+    override fun addItemToSublist(note: Note.Sublist, item: SublistItem): Result<SublistItem, NoteError> {
+        (categorySelected?.notes?.find { it.uuid == note.uuid } as Note.Sublist).sublist.toMutableList().add(item)
+        save(categorySelected!!).mapBoth(
+            success = { return Ok(item) },
+            failure = { return Err(NoteError.NoteNotDeleted()) })
+    }
+
+    override fun removeItemFromSublist(note: Note.Sublist, item: SublistItem): Result<SublistItem, NoteError> {
+        (categorySelected?.notes?.find { it.uuid == note.uuid } as Note.Sublist).sublist.toMutableList().remove(item)
+        save(categorySelected!!).mapBoth(
+            success = { return Ok(item) },
+            failure = { return Err(NoteError.NoteNotDeleted()) })
     }
 
     override fun loadAll(clearBefore: Boolean): Result<Iterable<Category>, CategoryError> {

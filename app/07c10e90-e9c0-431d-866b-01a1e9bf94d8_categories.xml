@@ -1,0 +1,75 @@
+<category>
+  <uuid>07c10e90-e9c0-431d-866b-01a1e9bf94d8</uuid>
+  <title>Paisajes</title>
+  <description>Sitios que visitar</description>
+  <level>0</level>
+  <notes>
+    <noteId>6e7312d7-3e19-4f93-8201-2d8aba1787dc</noteId>
+    <type>text</type>
+    <fechaCreate>2023-12-04T18:26:12.477909200</fechaCreate>
+    <check>false</check>
+    <text>Esto es una tarea de texto</text>
+  </notes>
+  <notes>
+    <noteId>e4d8aae8-7ce9-45f7-97dc-8cd78236d368</noteId>
+    <type>image</type>
+    <fechaCreate>2023-12-04T18:26:12.480910100</fechaCreate>
+    <check>false</check>
+    <image>https://img.freepik.com/fotos-premium/hermosos-paisajes-paisajes-naturales-hacen-que-personas-relajen-disfruten-fondo-pantalla_917506-214429.jpg</image>
+  </notes>
+  <notes>
+    <noteId>0fc0f515-4b14-45fa-9b63-2530101fd494</noteId>
+    <type>audio</type>
+    <fechaCreate>2023-12-04T18:26:12.481910600</fechaCreate>
+    <check>false</check>
+    <audio>url de la nota de audio</audio>
+  </notes>
+  <notes>
+    <noteId>fc32ff14-d77d-43e6-a415-b000b75f4751</noteId>
+    <type>sublist</type>
+    <fechaCreate>2023-12-04T18:26:12.507578500</fechaCreate>
+    <check>true</check>
+    <sublist>
+      <check>false</check>
+      <subListValue>Tarea 1</subListValue>
+    </sublist>
+    <sublist>
+      <check>false</check>
+      <subListValue>Tarea 2</subListValue>
+    </sublist>
+  </notes>
+  <notes>
+    <noteId>b73324dc-dc18-494b-83ab-3727748cd581</noteId>
+    <type>text</type>
+    <fechaCreate>2023-12-04T18:26:12.509069100</fechaCreate>
+    <check>false</check>
+    <text>Esto es otra tarea de texto</text>
+  </notes>
+  <notes>
+    <noteId>910396ff-0bc7-4bea-b956-6924c6287c8e</noteId>
+    <type>image</type>
+    <fechaCreate>2023-12-04T18:26:12.509069100</fechaCreate>
+    <check>false</check>
+    <image>https://www.hofmann.es/blog/wp-content/uploads/2021/09/HF_3_Paisajes_WEB-23.jpg</image>
+  </notes>
+  <notes>
+    <noteId>d7aba190-800e-43a8-9e62-7d85d8f2fc57</noteId>
+    <type>sublist</type>
+    <fechaCreate>2023-12-04T18:26:12.509761800</fechaCreate>
+    <check>false</check>
+  </notes>
+  <notes>
+    <noteId>29353fdc-d8c2-4384-8605-0e271ce3f061</noteId>
+    <type>text</type>
+    <fechaCreate>2023-12-04T18:26:12.509761800</fechaCreate>
+    <check>false</check>
+    <text>Esto es la última tarea de texto</text>
+  </notes>
+  <notes>
+    <noteId>4efbfaa5-fd17-439c-94d9-ed9e0ad95a66</noteId>
+    <type>image</type>
+    <fechaCreate>2023-12-04T18:26:12.509761800</fechaCreate>
+    <check>false</check>
+    <image>https://images.hola.com/imagenes/viajes/20200401164667/paisajes-de-espana-a-vista-de-pajaro-drone-aereas/0-806-353/paisajes-a-vista-de-pajaro-t.jpg</image>
+  </notes>
+</category>

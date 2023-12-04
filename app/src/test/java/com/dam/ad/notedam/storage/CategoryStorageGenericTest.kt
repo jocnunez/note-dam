@@ -18,7 +18,7 @@ abstract class CategoryStorageGenericTest {
     @After
     fun tearDown() {
         // Borrar ficheros
-        Utils.clearFilesFn(listOf(), filePath(), getFileNameTail(),"")
+        //Utils.clearFilesFn(listOf(), filePath(), getFileNameTail(),"")
     }
 
     @Test

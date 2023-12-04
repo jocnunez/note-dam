@@ -20,7 +20,7 @@ data class CategoryDto(
     val level: Int = 0,
     @field:JacksonXmlProperty(localName = "notes")
     @param:JacksonXmlProperty(localName = "notes")
-    val notes: List<NoteDto> = listOf()
+    val notes: List<NoteDto>? = listOf()
 ){
     // Constructor por defecto
     @JsonCreator // Importa esta anotación de com.fasterxml.jackson.annotation.JsonCreator
