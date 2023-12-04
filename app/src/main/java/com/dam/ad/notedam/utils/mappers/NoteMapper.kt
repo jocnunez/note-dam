@@ -20,7 +20,7 @@ fun NoteDto.toNote(): Note<*> {
         )
         "image" -> Note.Image(
             uuid = UUID.fromString(uuid),
-            image = Uri.parse(image!!),
+            image = image!!,
             check = check,
             fechaCreate = LocalDateTime.parse(fechaCreate)
         )
@@ -32,7 +32,7 @@ fun NoteDto.toNote(): Note<*> {
         )
         "sublist" -> Note.Sublist(
             uuid = UUID.fromString(uuid),
-            sublist = subList!!,
+            sublist = subList ?: listOf(),
             check = check,
             fechaCreate = LocalDateTime.parse(fechaCreate)
         )
