@@ -1,5 +1,6 @@
 package com.dam.ad.notedam.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,8 +31,23 @@ class ItemCategoryAdapter(private var listItem: MutableList<Category>, private v
         private val binding = ItemCategoryLayoutBinding.bind(view)
 
         fun bind(item: Category) {
-//            binding.title.text = item.title
-            //binding.description.text = item.description
+            binding.title.text = item.title
+            binding.text.text = item.description
+            binding.priority.text = item.priority.toString()
+            binding.upButton.setOnClickListener {
+                item.priority += 1u
+                binding.priority.text = item.priority.toString()
+                listItem.sortBy { it.priority }
+                notifyDataSetChanged()
+            }
+            binding.downButton.setOnClickListener {
+                if (item.priority > 0u) {
+                    item.priority -= 1u
+                    binding.priority.text = item.priority.toString()
+                    listItem.sortBy { it.priority }
+                    notifyDataSetChanged()
+                }
+            }
         }
 
         fun setListener(category: Category) {
@@ -54,7 +70,7 @@ class ItemCategoryAdapter(private var listItem: MutableList<Category>, private v
 
     fun add(category: Category) {
         listItem.add(category)
-        notifyDataSetChanged()
+        notifyItemInserted(listItem.size - 1)
     }
 
     fun delete(category: Category) {

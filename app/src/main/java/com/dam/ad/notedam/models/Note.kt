@@ -14,7 +14,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
 
     data class Text(
         override val uuid: UUID = UUID.randomUUID(),
-        val text: String,
+        var text: String,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
     ): Note<String>(uuid, text, fechaCreate, check){
@@ -37,7 +37,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
     data class Image(
 
         override val uuid: UUID = UUID.randomUUID(),
-        val image: Uri,
+        var image: Uri,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
     ): Note<Uri>(uuid, image, fechaCreate, check) {
@@ -60,7 +60,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
     data class Audio(
 
         override val uuid: UUID = UUID.randomUUID(),
-        val audio: File,
+        var audio: File,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
     ): Note<File>(uuid, audio, fechaCreate, check) {

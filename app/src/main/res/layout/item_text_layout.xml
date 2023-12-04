@@ -6,30 +6,29 @@
     app:cardCornerRadius="15dp"
     app:cardElevation="5dp"
     app:cardBackgroundColor="@color/red_navbar"
-    android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:layout_marginTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="93">
+            android:layout_weight="98">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Categoría"
+                android:text="Nota de texto"
                 android:textSize="18sp"
                 android:textColor="@color/white_background"/>
 
@@ -37,43 +36,38 @@
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripción..."
+                android:text="Texto..."
                 android:textSize="12sp"
                 android:textColor="@color/white_background"
-                android:layout_marginStart="10dp" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="7"
+            android:orientation="vertical"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/upButton"
-                android:layout_width="20dp"
-                android:layout_height="14dp"
-                android:background="@drawable/up"/>
+            android:layout_weight="2">
 
             <TextView
-                android:id="@+id/priority"
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
+                android:text="03/12/23"
+                android:textSize="15sp"
                 android:textColor="@color/white_background"
-                android:textSize="20sp"
-                android:layout_marginBottom="3dp"/>
+                android:layout_gravity="end"/>
 
-            <ImageView
-                android:id="@+id/downButton"
-                android:layout_width="20dp"
-                android:layout_height="14dp"
-                android:background="@drawable/down"/>
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:buttonTint="@color/white_background"
+                android:layout_gravity="end"/>
 
         </LinearLayout>
 

@@ -7,12 +7,8 @@ import java.util.UUID
 @RequiresApi(Build.VERSION_CODES.O)
 data class Category(
     val uuid: UUID = UUID.randomUUID(),
-
-    val title: String,
-
-    val description: String,
-
-    val priority: UInt,
-
+    var title: String,
+    var description: String,
+    var priority: UInt,
     val notes: Iterable<Note<*>>
 )

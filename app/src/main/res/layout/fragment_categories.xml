@@ -13,27 +13,27 @@
         android:id="@+id/categories_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:text="@string/categories_title"
         android:textColor="@color/red_text"
         android:textSize="40sp"
         android:layout_gravity="center_horizontal"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_category"
+        android:id="@+id/recyclerCategory"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="75dp"/>
-
+        android:layout_height="600dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
 
     <Button
         android:id="@+id/anadir_category_button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/red_navbar"
         android:layout_gravity="center_horizontal"
         android:text="@string/anadir" />
-
 
 </LinearLayout>

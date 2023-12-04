@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="20dp"
+    app:cardBackgroundColor="@color/red_navbar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/alertTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nueva nota de texto"
+            android:textColor="@color/white_background"
+            android:textSize="20sp"
+            android:layout_gravity="start"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="30dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/white_background"
+            app:hintTextColor="@color/white_background">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Texto"
+                android:inputType="text"
+                android:textColor="@color/white_background"
+                android:textColorHint="@color/white_background"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp">
+
+            <Button
+                android:id="@+id/aceptar"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_navbar"
+                android:backgroundTint="@color/white_background"
+                android:text="Aceptar"
+                android:layout_marginEnd="10dp"/>
+
+            <Button
+                android:id="@+id/cancelar"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_navbar"
+                android:backgroundTint="@color/white_background"
+                android:text="Cancelar"
+                android:layout_marginStart="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
