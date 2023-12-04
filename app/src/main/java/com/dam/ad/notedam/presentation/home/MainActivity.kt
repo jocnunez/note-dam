@@ -45,14 +45,11 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun firstTimeInfo() {
         val firstTime = booleanPreferencesKey("first_time")
-        this.dataStore.data.map { it[firstTime] ?: true }.collect {
-            if (it) {
+        this.dataStore.data.map { it[firstTime] ?: true }.collect { isFirstTime ->
+            if (isFirstTime) {
                 AlertDialog.Builder(this).apply {
-                    setTitle("Bienvenide a NoteDAM")
-                    setMessage(
-                        "La aplicación usa almacenamiento local por defecto." +
-                                " Esto puede ser cambiado en la configuración."
-                    )
+                    setTitle(getString(R.string.welcome))
+                    setMessage(getString(R.string.welcome_message))
                     setNeutralButton("Continuar") { _, _ -> }
                 }.show()
 
