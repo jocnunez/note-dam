@@ -6,4 +6,9 @@
     <string name="categories_title">Categories</string>
     <string name="todos_title">ToDos</string>
     <string name="settings_title">Settings</string>
+    <string name="to_do">To Do</string>
+    <string name="local_value">LOCAL</string>
+    <string name="sql_value">SQL</string>
+    <string name="no_sql_value">NO SQL</string>
+    <string name="anadir">Añadir</string>
 </resources>
