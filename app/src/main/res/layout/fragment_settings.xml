@@ -79,6 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroupBBDD" />
 
     <RadioGroup
+        android:id="@+id/radioGroupFile"
         android:layout_width="190dp"
         android:layout_height="178dp"
         android:layout_marginStart="30dp"
@@ -90,22 +91,22 @@
             android:id="@+id/csv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/AzulSemiClaro"
-            android:text="CSV" />
+            android:text="CSV"
+            android:textColor="@color/AzulSemiClaro" />
 
         <RadioButton
             android:id="@+id/JSON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/AzulSemiClaro"
-            android:text="JSON" />
+            android:text="JSON"
+            android:textColor="@color/AzulSemiClaro" />
 
         <RadioButton
             android:id="@+id/XML"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/AzulSemiClaro"
-            android:text="XML" />
+            android:text="XML"
+            android:textColor="@color/AzulSemiClaro" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
