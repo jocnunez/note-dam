@@ -47,7 +47,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
         nav = (requireActivity() as MainActivity).getNav()
         nav.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.todosFragment) {
-                state.categoryController.getCategorySelected()?.notes?.let { mAdapter.setNotes(it) }
+                state.categoryController.getCategorySelected()?.notes?.let { mAdapter.setNotes(it.values.toMutableList()) }
             }
         }
         return binding.root
@@ -141,7 +141,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
                             3 -> {
                                 val item = Note.Sublist(
                                     UUID.randomUUID(),
-                                    mutableListOf(),
+                                    mutableMapOf(),
                                     false,
                                     LocalDateTime.now()
                                 )
@@ -160,9 +160,9 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
 
     private fun setRecyclerView() {
 
-        val list = state.categoryController.getCategorySelected()?.notes ?: mutableListOf()
+        val list = state.categoryController.getCategorySelected()?.notes ?: mutableMapOf()
 
-        mAdapter = ItemNoteAdapter(list, this, state)
+        mAdapter = ItemNoteAdapter(list.values.toMutableList(), this, state)
         mLayoutManager = LinearLayoutManager(requireContext())
 
         binding.todoCategory.apply {
@@ -197,7 +197,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
 
                                         state.categoryController.addNoteToSelectedCategory(newItem)
                                         state.categoryController.getCategorySelected()?.notes
-                                            ?.let { notes -> mAdapter.setNotes(notes) }
+                                            ?.let { notes -> mAdapter.setNotes(notes.values.toMutableList()) }
 
                                     }
 
@@ -217,7 +217,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
 
                                         state.categoryController.addNoteToSelectedCategory(newItem)
                                         state.categoryController.getCategorySelected()?.notes
-                                            ?.let { notes -> mAdapter.setNotes(notes) }
+                                            ?.let { notes -> mAdapter.setNotes(notes.values.toMutableList()) }
 
                                     }
 
@@ -236,7 +236,7 @@ class TodosFragment : Fragment(), OnElementClickListener<Note<*>> {
 
                                         state.categoryController.addNoteToSelectedCategory(item)
                                         state.categoryController.getCategorySelected()?.notes
-                                            ?.let { notes -> mAdapter.setNotes(notes) }
+                                            ?.let { notes -> mAdapter.setNotes(notes.values.toMutableList()) }
 
                                     }
 

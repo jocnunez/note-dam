@@ -10,5 +10,5 @@ data class Category(
     var title: String,
     var description: String,
     var priority: UInt,
-    val notes: MutableList<Note<*>>
+    val notes: MutableMap<UUID, Note<*>>
 )

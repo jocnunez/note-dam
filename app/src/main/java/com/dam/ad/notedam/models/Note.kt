@@ -82,13 +82,13 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
 
     data class Sublist(
         override val uuid: UUID = UUID.randomUUID(),
-        val sublist: Iterable<SublistItem>,
+        val sublist: MutableMap<String, SublistItem>,
         override val check: Boolean,
         override val fechaCreate: LocalDateTime,
-    ): Note<Iterable<SublistItem>>(uuid, sublist, fechaCreate, check) {
+    ): Note<MutableMap<String, SublistItem>>(uuid, sublist, fechaCreate, check) {
         override fun toCsvRow(separator: Char, tail: Char?): String {
             return "sublist$separator$uuid$separator${
-                sublist.joinToString(separator = "::", transform = { it.toCsvRow('¬')})
+                sublist.values.joinToString(separator = "::", transform = { it.toCsvRow('¬')})
             }$separator$check$separator$fechaCreate${tail ?: ""}"
         }
 
@@ -97,7 +97,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
                 val sublist = values[2]
                 return Sublist(
                     uuid = UUID.fromString(values[1]),
-                    sublist = if (sublist.isEmpty()) listOf() else sublist.split("::").map { it.fromCsvRowToSublistItem('¬') },
+                    sublist = if (sublist.isEmpty()) mutableMapOf() else sublist.split("::").map { it.fromCsvRowToSublistItem('¬') }.associateBy { it.subListValue }.toMutableMap(),
                     check = values[3].toBoolean(),
                     fechaCreate = LocalDateTime.parse(values[4])
                 )

@@ -32,7 +32,7 @@ fun NoteDto.toNote(): Note<*> {
         )
         "sublist" -> Note.Sublist(
             uuid = UUID.fromString(uuid),
-            sublist = subList ?: listOf(),
+            sublist = subList?.associateBy { it.subListValue }?.toMutableMap() ?: mutableMapOf(),
             check = check,
             fechaCreate = LocalDateTime.parse(fechaCreate)
         )
@@ -67,7 +67,7 @@ fun Note<*>.toNoteDto(): NoteDto {
         is Note.Sublist -> NoteDto(
             type = "sublist",
             uuid = uuid.toString(),
-            subList = value.toList(),
+            subList = value.values.toList(),
             check = check,
             fechaCreate = fechaCreate.toString()
         )

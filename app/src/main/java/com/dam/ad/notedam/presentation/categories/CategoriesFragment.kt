@@ -59,7 +59,7 @@ class CategoriesFragment : Fragment(), OnElementClickListener<Category> {
         binding.anadirCategoryButton.setOnClickListener {
             CategoryAlertDialog.showAlertDialog(requireContext(), object: CategoryAlertDialog.CategoryAlertListener {
                 override fun onPositiveButtonClick(text1: String, text2: String, text3: String) {
-                    val category = Category(UUID.randomUUID(), text1, text2, text3.toUIntOrNull() ?: 0u, mutableListOf())
+                    val category = Category(UUID.randomUUID(), text1, text2, text3.toUIntOrNull() ?: 0u, mutableMapOf())
                     mAdapter.add(category)
                     state.categoryController.save(category)
                     sortCartegories()

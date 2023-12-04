@@ -17,8 +17,9 @@ import java.util.*
 class RepositoryCategoriesMemory: IRepositoryCategories{
 
     private val id = UUID.randomUUID()
+
 //    private val categories: MutableMap<UUID, Category> = mutableMapOf(
-//        id to Category(id, "Paisajes", "Sitios que visitar", 0u, listOf(
+//        id to Category(id, "Paisajes", "Sitios que visitar", 0u, mutableMapOf(
 //            com.dam.ad.notedam.models.Note.Text(UUID.randomUUID(), "Esto es una tarea de texto", false, LocalDateTime.now()),
 //            com.dam.ad.notedam.models.Note.Image(UUID.randomUUID(), "https://img.freepik.com/fotos-premium/hermosos-paisajes-paisajes-naturales-hacen-que-personas-relajen-disfruten-fondo-pantalla_917506-214429.jpg", false, LocalDateTime.now()),
 //            com.dam.ad.notedam.models.Note.Audio(UUID.randomUUID(), File("url de la nota de audio"), false, LocalDateTime.now()),
@@ -27,7 +28,8 @@ class RepositoryCategoriesMemory: IRepositoryCategories{
 //            com.dam.ad.notedam.models.Note.Image(UUID.randomUUID(), "https://www.hofmann.es/blog/wp-content/uploads/2021/09/HF_3_Paisajes_WEB-23.jpg", false, LocalDateTime.now()),
 //            com.dam.ad.notedam.models.Note.Sublist(UUID.randomUUID(), listOf(), false, LocalDateTime.now()),
 //            com.dam.ad.notedam.models.Note.Text(UUID.randomUUID(), "Esto es la última tarea de texto", false, LocalDateTime.now()),
-//            com.dam.ad.notedam.models.Note.Image(UUID.randomUUID(), "https://images.hola.com/imagenes/viajes/20200401164667/paisajes-de-espana-a-vista-de-pajaro-drone-aereas/0-806-353/paisajes-a-vista-de-pajaro-t.jpg", false, LocalDateTime.now())))
+//            com.dam.ad.notedam.models.Note.Image(UUID.randomUUID(), "https://images.hola.com/imagenes/viajes/20200401164667/paisajes-de-espana-a-vista-de-pajaro-drone-aereas/0-806-353/paisajes-a-vista-de-pajaro-t.jpg", false, LocalDateTime.now()))
+//        )
 //    )
 
     private val categories = mutableMapOf<UUID, Category>()
