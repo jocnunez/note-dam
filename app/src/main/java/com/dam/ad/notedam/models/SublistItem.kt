@@ -1,7 +1,19 @@
 package com.dam.ad.notedam.models
 
-data class SublistItem(val check: Boolean, val valor: String){
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+
+@JacksonXmlRootElement(localName = "subListItem")
+data class SublistItem(
+    @field:JacksonXmlProperty(localName = "check")
+    @param:JacksonXmlProperty(localName = "check")
+    val check: Boolean,
+    @field:JacksonXmlProperty(localName = "subListValue")
+    @param:JacksonXmlProperty(localName = "subListValue")
+    val subListValue: String
+){
+
     fun toCsvRow(separator: Char, tail: Char? = null): String {
-        return "$check$separator$valor${tail ?: ""}"
+        return "$check$separator$subListValue${tail ?: ""}"
     }
 }

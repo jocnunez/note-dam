@@ -7,10 +7,10 @@ import com.dam.ad.notedam.utils.mappers.fromCsvRowToSublistItem
 import java.io.File
 import java.time.LocalDateTime
 import java.util.UUID
-
 @RequiresApi(Build.VERSION_CODES.O)
 sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: LocalDateTime, open val check: Boolean) {
     abstract fun toCsvRow(separator: Char, tail: Char? = null): String
+
 
     data class Text(
         override val uuid: UUID = UUID.randomUUID(),
@@ -33,7 +33,9 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
         }
     }
 
+
     data class Image(
+
         override val uuid: UUID = UUID.randomUUID(),
         val image: Uri,
         override val check: Boolean,
@@ -56,6 +58,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
     }
 
     data class Audio(
+
         override val uuid: UUID = UUID.randomUUID(),
         val audio: File,
         override val check: Boolean,
@@ -94,7 +97,7 @@ sealed class Note<T>(open val uuid: UUID, val value: T, open val fechaCreate: Lo
                 return Sublist(
                     uuid = UUID.fromString(values[1]),
                     sublist = values[2].split(':')
-                        .map { it.fromCsvRowToSublistItem(separator) },
+                        .map { it.fromCsvRowToSublistItem('¬') },
                     check = values[3].toBoolean(),
                     fechaCreate = LocalDateTime.parse(values[4])
                 )

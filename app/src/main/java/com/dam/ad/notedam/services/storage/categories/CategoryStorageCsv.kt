@@ -23,7 +23,7 @@ class CategoryStorageCsv: CategoryStorageService {
     override fun export(element: Category, filePath: String, clearFiles: Boolean): Result<Category, CategoryError> {
         val fileUsing = filePath + element.uuid + fileNameBase
         if(clearFiles){
-            Utils.clearFilesFn(listOf(fileUsing), filePath, fileNameBase)
+            Utils.clearFilesFn(listOf(fileUsing), filePath, fileNameBase, "CSV")
         }
         val file = File(filePath + element.uuid + fileNameBase)
         return file.validate(FileAction.WRITE).mapBoth(
@@ -45,7 +45,7 @@ class CategoryStorageCsv: CategoryStorageService {
     override fun exportAll(elements: Iterable<Category>, filePath: String, clearFiles: Boolean): Result<Iterable<Category>, CategoryError> {
         val filesUsing = elements.map { filePath + it.uuid + fileNameBase }
         if(clearFiles){
-            Utils.clearFilesFn(filesUsing, filePath, fileNameBase)
+            Utils.clearFilesFn(filesUsing, filePath, fileNameBase, "CSV")
         }
 
         elements.forEach {category ->
