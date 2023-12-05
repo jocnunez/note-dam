@@ -1,67 +1,106 @@
 package com.dam.ad.notedam.services.storage
 
-import android.app.AlertDialog
 import android.content.Context
 import com.dam.ad.notedam.models.Category
+import com.dam.ad.notedam.models.SublistItem
 import com.dam.ad.notedam.models.Todo
-import java.io.FileNotFoundException
-import java.io.IOException
+import java.time.LocalDate
 
 class CsvStorageService : IStorageService {
-    private val fileName = "categories.csv"
+    private val categoriesFile = "categories.csv"
+    private val todosFile = "todos.csv"
+    private val sublistsFile = "sublists.csv"
 
-    override fun write(context: Context, content: List<Category>) {
-        try {
-            context.openFileOutput(fileName, Context.MODE_PRIVATE).bufferedWriter()
-                .use { writer ->
-                    writer.write(
-                        content.joinToString(separator = "\n") { category ->
-                            category.todos.joinToString(separator = "\n") { todo ->
-                                "${category.name}#${todo.title}#${todo.content}"
-                            }
+    // TODO: validar los strings (no pueden contener | ni estar vacías)
+
+    override fun write(context: Context, categories: List<Category>) {
+        writeCategories(context, categories)
+    }
+
+    private fun writeCategories(context: Context, categories: List<Category>) {
+        context.openFileOutput(categoriesFile, Context.MODE_PRIVATE).bufferedWriter().use { writer ->
+            writer.write(categories.joinToString("\n") { "${it.name}|${it.createdAt}" })
+        }
+        writeTodos(context, categories)
+    }
+
+    private fun writeTodos(context: Context, categories: List<Category>) {
+        context.openFileOutput(todosFile, Context.MODE_PRIVATE).bufferedWriter().use { writer ->
+            writer.write(categories.joinToString("\n") { cat -> categoryToCsvRows(context, cat) })
+        }
+    }
+
+    private fun categoryToCsvRows(context: Context, category: Category): String {
+        return category.todos.joinToString("\n") {
+            "${category.name}|${it.type.name}|${it.title}|${it.createdAt}|${it.completed}|" +
+                    when (it) {
+                        is Todo.TextTodo -> it.text
+                        is Todo.ImageTodo -> it.image
+                        is Todo.AudioTodo -> it.audio
+                        is Todo.SublistTodo -> {
+                            writeSublist(context, it)
+                            it.title
                         }
-                    )
-                }
-        } catch (e: FileNotFoundException) {
-            AlertDialog.Builder(context).apply {
-                setTitle("Error")
-                setMessage("El fichero con los datos no existe")
-                setPositiveButton("OK") { _, _ -> }
-            }.show()
-        } catch (e: IOException) {
-            AlertDialog.Builder(context).apply {
-                setTitle("Error")
-                setMessage("Error al escribir el fichero con los datos")
-                setPositiveButton("OK") { _, _ -> }
-            }.show()
+                    }
+        }
+    }
+
+    private fun writeSublist(context: Context, sublistTodo: Todo.SublistTodo) {
+        context.openFileOutput(sublistsFile, Context.MODE_APPEND).bufferedWriter().use { writer ->
+            writer.append(
+                sublistTodo.sublist.joinToString("\n") { item ->
+                    "${sublistTodo.title}|${item.title}|${item.completed}"
+                } + "\n"
+            )
         }
     }
 
     override fun read(context: Context): List<Category> {
-        val categories = mutableListOf<Category>()
+        return readCategories(context)
+    }
 
-        try {
-            context.openFileInput(fileName).bufferedReader()
-                .use { reader ->
-                    reader.forEachLine { line ->
-                        val (cat, name, content) = line.split("#")
-                        val category = categories.find { it.name == cat }
-                        category?.todos?.add(Todo(name, content))
-                            ?: categories.add(Category(cat, mutableListOf(Todo(name, content))))
-                    }
-                }
-        } catch (e: FileNotFoundException) {
-            AlertDialog.Builder(context).apply {
-                setTitle("Error")
-                setMessage("El fichero con los datos no existe")
-            }.show()
-        } catch (e: IOException) {
-            AlertDialog.Builder(context).apply {
-                setTitle("Error")
-                setMessage("Error al leer el fichero con los datos")
-            }.show()
+    private fun readCategories(context: Context): List<Category> {
+        return context.openFileInput(categoriesFile).bufferedReader().useLines { lines ->
+            lines.map { line ->
+                val (name, createdAt) = line.split("|")
+                Category(
+                    name,
+                    LocalDate.parse(createdAt),
+                    readTodos(context, name)
+                )
+            }.toList()
         }
+    }
 
-        return categories
+    private fun readTodos(context: Context, catName: String): MutableList<Todo> {
+        return context.openFileInput(todosFile).bufferedReader().useLines { lines ->
+            lines.filter { it.startsWith(catName) }.map { line ->
+                val (type, title, createdAt, completed, contents) = line.split("|").drop(1)
+                when (type) {
+                    "TEXT" -> Todo.TextTodo(title, LocalDate.parse(createdAt), completed.toBoolean(), contents)
+                    "IMAGE" -> Todo.ImageTodo(title, LocalDate.parse(createdAt), completed.toBoolean(), contents)
+                    "AUDIO" -> Todo.AudioTodo(title, LocalDate.parse(createdAt), completed.toBoolean(), contents)
+                    "SUBLIST" -> {
+                        Todo.SublistTodo(
+                            title,
+                            LocalDate.parse(createdAt),
+                            completed.toBoolean(),
+                            readSublists(context, title)
+                        )
+                    }
+
+                    else -> throw IllegalArgumentException("Unknown type: $type")
+                }
+            }
+        }.toMutableList()
+    }
+
+    private fun readSublists(context: Context, todoTitle: String): MutableList<SublistItem> {
+        return context.openFileInput(sublistsFile).bufferedReader().useLines { lines ->
+            lines.filter { it.startsWith(todoTitle) }.map { line ->
+                val (title, completed) = line.split("|").drop(1)
+                SublistItem(title, completed.toBoolean())
+            }.toMutableList()
+        }
     }
 }

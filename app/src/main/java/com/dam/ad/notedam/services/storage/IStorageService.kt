@@ -4,6 +4,6 @@ import android.content.Context
 import com.dam.ad.notedam.models.Category
 
 interface IStorageService {
-    fun write(context: Context, content: List<Category>)
+    fun write(context: Context, categories: List<Category>)
     fun read(context: Context): List<Category>
 }
