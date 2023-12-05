@@ -5,6 +5,7 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.bumptech.glide.Glide
 import com.core.domain.models.notes.*
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.TodoBinding
@@ -37,9 +38,15 @@ class TodoAdapter(
 
             is NotaImagen -> {
                 holder.titleTodo.text = "NOTA IMAGEN"
-                holder.image.setImageResource(R.drawable.ic_launcher_background)
                 holder.buttonAudio.visibility = View.GONE
                 holder.textViewTodo.visibility = View.GONE
+                val imageUrl = currentItem.urlImage
+                Glide.with(holder.itemView.context)
+                    .load(imageUrl)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_background) // Imagen por defecto
+                    .error(R.drawable.ic_launcher_background) // Imagen en caso de error
+                    .into(holder.image)
             }
 
             is NotaAudio -> {

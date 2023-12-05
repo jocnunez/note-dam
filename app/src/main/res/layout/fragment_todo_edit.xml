@@ -65,6 +65,7 @@
 				android:layout_marginTop="15dp"
 				android:layout_marginLeft="20dp"/>
 		<ImageView
+				id="@+id/imageNota"
 				android:src="@drawable/ic_launcher_background"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content" android:id="@+id/imageNota"/>

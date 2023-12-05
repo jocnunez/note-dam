@@ -204,4 +204,9 @@ class CategoriesFragment : Fragment(), OnCategoryClickListener {
     override fun editSelectedCategory(categoria: Categoria) {
         mActivity.sharedViewModel.editCategoryLiveData(categoria)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mActivity.exportBySourceData()
+    }
 }

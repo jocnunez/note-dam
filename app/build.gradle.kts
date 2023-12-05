@@ -41,6 +41,9 @@ android {
 }
 
 dependencies {
+    // Glide para imágenes
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     // GSON
     implementation("com.google.code.gson:gson:2.9.0")
     //XML

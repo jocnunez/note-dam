@@ -3,7 +3,9 @@ package com.dam.ad.notedam.presentation.todos
 import TodoAdapter
 import android.R
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.core.domain.models.Categoria
 import com.core.domain.models.notes.*
 import com.dam.ad.notedam.databinding.FragmentTodoEditBinding
@@ -150,6 +153,21 @@ class TodosFragment : Fragment(), OnNoteClickListener {
                 is NotaImagen -> {
                     spinnerTipoNota.setSelection(1)
                     //TODO: implementar la imagen de la nota a editar
+                    val imageUrl = notaEdited.urlImage
+                    Glide.with(requireContext())
+                        .load(imageUrl)
+                        .centerCrop()
+                        .placeholder(com.dam.ad.notedam.R.drawable.ic_launcher_background) // Imagen por defecto
+                        .error(com.dam.ad.notedam.R.drawable.ic_launcher_background) // Imagen en caso de error
+                        .into(bindingTodoEdit.imageNota)
+
+                    bindingTodoEdit.imageNota.setOnClickListener {
+                        val galleryIntent = Intent(
+                            Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                        )
+                        startActivityForResult(galleryIntent, 1)
+                    }
                 }
 
                 is NotaAudio -> {
@@ -196,6 +214,7 @@ class TodosFragment : Fragment(), OnNoteClickListener {
     }
 
     /**
+     * // TODO:
      * Añade una subnota a la nota creada/editada
      * @author Angel Maroto Chivite
      * @param bindingTodoEdit el binding del fragmento utilizado para editar una nota
@@ -221,6 +240,7 @@ class TodosFragment : Fragment(), OnNoteClickListener {
         val uuid = UUID.fromString(bindingTodoEdit.textViewUUID.text.toString())
         val checkBox = bindingTodoEdit.checkBoxNota.isChecked
         val imagen = bindingTodoEdit.imageNota.toString()
+
         val texto = bindingTodoEdit.editTextNota.text.toString()
         val subNota: MutableList<Subnota> = mutableListOf()
 
@@ -241,7 +261,6 @@ class TodosFragment : Fragment(), OnNoteClickListener {
             categorySelected?.notas?.add(notaNueva)
         }
         setUpAdapter()
-        mActivity.exportBySourceData()
     }
 
     override fun deleteNote(nota: Nota) {
@@ -330,5 +349,10 @@ class TodosFragment : Fragment(), OnNoteClickListener {
             val updatedCategory = categorySelected.copy(notas = updatedNotes.toMutableList())
             mActivity.sharedViewModel.editNotesFromCategory(updatedCategory)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mActivity.exportBySourceData()
     }
 }
