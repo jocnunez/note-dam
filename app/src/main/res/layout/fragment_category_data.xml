@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
+                                                   android:layout_height="wrap_content">
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/icono_categoria"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="32dp"
+            app:layout_constraintHorizontal_bias="0.173" android:layout_marginStart="32dp"
+            android:id="@+id/textInputLayout" android:layout_marginEnd="32dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:layout_height="match_parent" android:id="@+id/textoNombreCategoria"
+                android:hint="Nombre de la categoria"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <EditText
+            android:layout_width="100dp"
+            android:textSize="20dp"
+            android:layout_height="wrap_content" android:id="@+id/textoPrioridadCategoria"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" android:layout_marginTop="24dp"
+            android:layout_marginEnd="40dp" tools:ignore="TextViewEdits"/>
+    <TextView
+            android:text="Prioridad categoría:"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="36dp"/>
+    <CheckBox
+            android:text="Marcar como seleccionada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/checkBox"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="32dp" app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintVertical_bias="0.0"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

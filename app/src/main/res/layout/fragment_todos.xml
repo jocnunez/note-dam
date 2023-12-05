@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.todos.TodosFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:context=".presentation.todos.TodosFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/todos_title" />
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+	          android:text="CATEGORY" app:layout_constraintTop_toTopOf="parent" android:id="@+id/textViewTitleCategory"
+	          app:layout_constraintStart_toStartOf="parent"
+	          android:padding="20dp"
+	          android:textSize="30sp"/>
+
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerViewTodo"
+			tools:listitem="@layout/todo"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textViewTitleCategory" app:layout_constraintHorizontal_bias="0.0"
+			app:layout_constraintVertical_bias="0.0"
+			android:paddingHorizontal="20dp"/>
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+			android:src="@android:drawable/ic_input_add"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:clickable="true" android:id="@+id/botonAñadirNota"
+			app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintHorizontal_bias="0.954" app:layout_constraintVertical_bias="0.96"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

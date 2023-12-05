@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/botonDesplegableEditar"
+            android:title="Editar"
+            android:icon="@drawable/icono_editar"
+    />
+    <item
+            android:id="@+id/botonDesplegableEliminar"
+            android:title="Eliminar"
+            android:icon="@drawable/icono_borrar"
+    />
+</menu>

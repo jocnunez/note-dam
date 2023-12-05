@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.dam.ad.notedam"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -41,6 +41,21 @@ android {
 }
 
 dependencies {
+    // Glide para imágenes
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // GSON
+    implementation("com.google.code.gson:gson:2.9.0")
+    //XML
+    implementation("org.simpleframework:simple-xml:2.7.1")
+
+    // Core Module
+    implementation(project(mapOf("path" to ":core")))
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    testImplementation("junit:junit:4.13.1")
 
     //NavigationComponent
     val navigationVersion = "2.7.5"
@@ -51,12 +66,17 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-compiler:2.48")
 
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 }
+

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+		<TextView
+				android:text="Tipo de Nota"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/textViewTipoNota"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"/>
+		<Spinner
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/spinnerTipo" android:minHeight="32dp"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"/>
+		<TextView
+				android:text="Identificador"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/textView"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="20dp"/>
+		<TextView
+				android:hint="UUID"
+				android:textStyle="bold"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/textViewUUID"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="20dp"/>
+		<TextView
+				android:text="Fecha de Creación"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/textView5"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"/>
+		<TextView
+				android:hint="Fecha"
+				android:textStyle="bold"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/textViewFecha"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="20dp"/>
+		<TextView
+				android:text="Tarea completada"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/textView6"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"/>
+		<CheckBox
+				android:text="CheckBox"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/checkBoxNota"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"/>
+		<TextView
+				android:text="Contenido de la Nota"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/textViewNotaContenido"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"/>
+		<ImageView
+				id="@+id/imageNota"
+				android:src="@drawable/ic_launcher_background"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/imageNota"/>
+		<Button
+				android:text="Seleccionar Audio"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/buttonAñadirAudio"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"/>
+		<EditText
+				android:hint="Escribe lo que queiras"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/editTextNota"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"/>
+		<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/recyclerViewSublist"
+				tools:listitem="@layout/todo_sublist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				tools:itemCount="1"
+				android:layout_marginTop="8dp"/>
+
+		<DatePicker
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/datePickerSubnote"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"/>
+
+		<Button
+				android:text="Añadir item de sublista"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/buttonAddSublist"
+				android:layout_marginTop="15dp"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"/>
+	</LinearLayout>
+</ScrollView>

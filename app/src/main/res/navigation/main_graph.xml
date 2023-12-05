@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph"
-    app:startDestination="@id/categoriesFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main_graph"
+            app:startDestination="@id/categoriesFragment">
 
-    <fragment
-        android:id="@+id/categoriesFragment"
-        android:name="com.dam.ad.notedam.presentation.categories.CategoriesFragment"
-        android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" />
-    <fragment
-        android:id="@+id/todosFragment"
-        android:name="com.dam.ad.notedam.presentation.todos.TodosFragment"
-        android:label="fragment_todos"
-        tools:layout="@layout/fragment_todos" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.dam.ad.notedam.presentation.settings.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+	<fragment
+			android:id="@+id/categoriesFragment"
+			android:name="com.dam.ad.notedam.presentation.categories.CategoriesFragment"
+			android:label="fragment_categories"
+			tools:layout="@layout/fragment_categories"/>
+	<fragment
+			android:id="@+id/todosFragment"
+			android:name="com.dam.ad.notedam.presentation.todos.TodosFragment"
+			android:label="fragment_todos"
+			tools:layout="@layout/fragment_todos"/>
+
+	<fragment
+			android:id="@+id/settingsFragment"
+			android:name="com.dam.ad.notedam.presentation.settings.SettingsFragment"
+			android:label="fragment_todos"
+			tools:layout="@xml/preferences"/>
 
 </navigation>
