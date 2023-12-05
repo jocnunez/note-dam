@@ -16,5 +16,9 @@
 
     <!-- Settings -->
     <string name="storage_format">Formato de almacenamiento</string>
+    <string name="tarea_completada">Tarea completada?</string>
+    <string name="imagen_texto">Imagen</string>
+    <string name="reproducir_audio">Reproducir</string>
+    <string name="parar_audio">Parar</string>
 
 </resources>
