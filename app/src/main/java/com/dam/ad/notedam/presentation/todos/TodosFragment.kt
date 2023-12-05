@@ -261,6 +261,7 @@ class TodosFragment : Fragment(), OnNoteClickListener {
             categorySelected?.notas?.add(notaNueva)
         }
         setUpAdapter()
+        mActivity.exportBySourceData()
     }
 
     override fun deleteNote(nota: Nota) {
@@ -349,10 +350,5 @@ class TodosFragment : Fragment(), OnNoteClickListener {
             val updatedCategory = categorySelected.copy(notas = updatedNotes.toMutableList())
             mActivity.sharedViewModel.editNotesFromCategory(updatedCategory)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mActivity.exportBySourceData()
     }
 }

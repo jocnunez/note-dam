@@ -185,7 +185,10 @@ class CategoriesFragment : Fragment(), OnCategoryClickListener {
     override fun deleteCategory(categoryId: UUID) {
         AlertDialog.Builder(binding.root.context).apply {
             setTitle("¿Seguro que quieres eliminar este registro?")
-            setPositiveButton("Aceptar") { _, _ -> mActivity.sharedViewModel.deleteCategoryLiveData(categoryId) }
+            setPositiveButton("Aceptar") { _, _ ->
+                mActivity.sharedViewModel.deleteCategoryLiveData(categoryId)
+                mActivity.exportBySourceData()
+            }
             setNegativeButton("Cancelar") { _, _ ->
                 Toast.makeText(
                     binding.root.context,
@@ -203,10 +206,5 @@ class CategoriesFragment : Fragment(), OnCategoryClickListener {
      */
     override fun editSelectedCategory(categoria: Categoria) {
         mActivity.sharedViewModel.editCategoryLiveData(categoria)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mActivity.exportBySourceData()
     }
 }
