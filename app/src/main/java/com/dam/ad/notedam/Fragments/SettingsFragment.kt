@@ -123,10 +123,18 @@ class SettingsFragment : Fragment() , RadioGroup.OnCheckedChangeListener{
                 .setNegativeButton("No") { dialog, _ ->
                     restaurandoEstado = true
                     binding.radioGroupBBDD.check(estadoAnterior!!)
+                    binding.radioGroupFile.check(estadoAnteriorFile!!)
                     estadoAnterior = binding.radioGroupBBDD.checkedRadioButtonId
                     estadoAnteriorFile = binding.radioGroupFile.checkedRadioButtonId
                     restaurandoEstado = false
                     dialog.dismiss()
+                }.setOnCancelListener {
+                    restaurandoEstado = true
+                    binding.radioGroupBBDD.check(estadoAnterior!!)
+                    binding.radioGroupFile.check(estadoAnteriorFile!!)
+                    estadoAnterior = binding.radioGroupBBDD.checkedRadioButtonId
+                    estadoAnteriorFile = binding.radioGroupFile.checkedRadioButtonId
+                    restaurandoEstado = false
                 }
                 .show()
         }
