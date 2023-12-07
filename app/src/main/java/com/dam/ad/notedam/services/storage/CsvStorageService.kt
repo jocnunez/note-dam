@@ -5,6 +5,7 @@ import com.dam.ad.notedam.models.Category
 import com.dam.ad.notedam.models.SublistItem
 import com.dam.ad.notedam.models.Todo
 import java.time.LocalDate
+import java.util.UUID
 
 class CsvStorageService : IStorageService {
     private val categoriesFile = "categories.csv"
@@ -18,21 +19,26 @@ class CsvStorageService : IStorageService {
     }
 
     private fun writeCategories(context: Context, categories: List<Category>) {
-        context.openFileOutput(categoriesFile, Context.MODE_PRIVATE).bufferedWriter().use { writer ->
-            writer.write(categories.joinToString("\n") { "${it.name}|${it.createdAt}" })
-        }
+        context.openFileOutput(categoriesFile, Context.MODE_PRIVATE).bufferedWriter()
+            .use { writer ->
+                writer.write(categories.joinToString("\n") {
+                    "${it.uuid}|${it.name}|${it.createdAt}"
+                })
+            }
         writeTodos(context, categories)
     }
 
     private fun writeTodos(context: Context, categories: List<Category>) {
         context.openFileOutput(todosFile, Context.MODE_PRIVATE).bufferedWriter().use { writer ->
-            writer.write(categories.joinToString("\n") { cat -> categoryToCsvRows(context, cat) })
+            writer.write(categories.joinToString("\n") { cat ->
+                categoryToCsvRows(context, cat)
+            })
         }
     }
 
     private fun categoryToCsvRows(context: Context, category: Category): String {
         return category.todos.joinToString("\n") {
-            "${category.name}|${it.type.name}|${it.title}|${it.createdAt}|${it.completed}|" +
+            "${category.uuid}|${it.type.name}|${it.title}|${it.createdAt}|${it.completed}|" +
                     when (it) {
                         is Todo.TextTodo -> it.text
                         is Todo.ImageTodo -> it.image
@@ -62,24 +68,43 @@ class CsvStorageService : IStorageService {
     private fun readCategories(context: Context): List<Category> {
         return context.openFileInput(categoriesFile).bufferedReader().useLines { lines ->
             lines.map { line ->
-                val (name, createdAt) = line.split("|")
+                val (uuid, name, createdAt) = line.split("|")
                 Category(
+                    UUID.fromString(uuid),
                     name,
                     LocalDate.parse(createdAt),
-                    readTodos(context, name)
+                    readTodos(context, uuid)
                 )
             }.toList()
         }
     }
 
-    private fun readTodos(context: Context, catName: String): MutableList<Todo> {
+    private fun readTodos(context: Context, catUuid: String): MutableList<Todo> {
         return context.openFileInput(todosFile).bufferedReader().useLines { lines ->
-            lines.filter { it.startsWith(catName) }.map { line ->
+            lines.filter { it.startsWith(catUuid) }.map { line ->
                 val (type, title, createdAt, completed, contents) = line.split("|").drop(1)
                 when (type) {
-                    "TEXT" -> Todo.TextTodo(title, LocalDate.parse(createdAt), completed.toBoolean(), contents)
-                    "IMAGE" -> Todo.ImageTodo(title, LocalDate.parse(createdAt), completed.toBoolean(), contents)
-                    "AUDIO" -> Todo.AudioTodo(title, LocalDate.parse(createdAt), completed.toBoolean(), contents)
+                    "TEXT" -> Todo.TextTodo(
+                        title,
+                        LocalDate.parse(createdAt),
+                        completed.toBoolean(),
+                        contents
+                    )
+
+                    "IMAGE" -> Todo.ImageTodo(
+                        title,
+                        LocalDate.parse(createdAt),
+                        completed.toBoolean(),
+                        contents
+                    )
+
+                    "AUDIO" -> Todo.AudioTodo(
+                        title,
+                        LocalDate.parse(createdAt),
+                        completed.toBoolean(),
+                        contents
+                    )
+
                     "SUBLIST" -> {
                         Todo.SublistTodo(
                             title,
