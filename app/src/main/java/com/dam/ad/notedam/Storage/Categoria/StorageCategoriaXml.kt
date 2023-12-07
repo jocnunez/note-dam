@@ -1,10 +1,9 @@
 package com.dam.ad.notedam.Storage.Categoria
 
 import android.util.Log
-import com.dam.ad.notedam.Config.MainContext
+import com.dam.ad.notedam.utils.MainContext
 import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.Storage.IStorageLocal
-import com.dam.ad.notedam.repositories.ICategoriaRepository
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
 import java.io.File

@@ -5,13 +5,12 @@ import com.dam.ad.notedam.Storage.IStorageLocal
 import java.util.*
 
 import android.util.Log
-import com.dam.ad.notedam.Config.MainContext
+import com.dam.ad.notedam.utils.MainContext
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.IOException
 import java.lang.reflect.Type
-import java.util.*
 
 class StorageCategoriaJson : IStorageLocal<Categoria> {
 

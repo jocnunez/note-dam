@@ -1,4 +1,4 @@
-package com.dam.ad.notedam.Config
+package com.dam.ad.notedam.utils
 
 import com.dam.ad.notedam.Activities.MainActivity
 

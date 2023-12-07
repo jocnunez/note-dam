@@ -1,7 +1,7 @@
 package com.dam.ad.notedam.Storage.Categoria
 
 import com.dam.ad.notedam.Config.ConfigStorageType
-import com.dam.ad.notedam.Config.MainContext
+import com.dam.ad.notedam.utils.MainContext
 import com.dam.ad.notedam.Enums.StorageType
 import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.Storage.IStorage

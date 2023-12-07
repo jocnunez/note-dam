@@ -44,10 +44,7 @@ class ItemCategoriaAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-
-
         val binding = ItemCategoriasBinding.bind(view)
-
 
         fun bind(categoria: Categoria) {
             binding.nombreCategoria.text = categoria.nombreCategoria

@@ -119,14 +119,13 @@ class CategoriesFragment() : Fragment() , ItemOnClickListener<Categoria>{
         }
     }
 
-
-
     override fun onClick(uuid: UUID) {
         abrirCategoria(uuid)
     }
 
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onLongClickListener(uuid: UUID): Boolean {
 
         val items = arrayOf("Actualizar", "Eliminar")
