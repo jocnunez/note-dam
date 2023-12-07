@@ -1,6 +1,7 @@
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dam.ad.notedam.Adapters.ItemOnClickListener
 import com.dam.ad.notedam.Adapters.SubListAdapter
@@ -9,6 +10,7 @@ import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ItemNotaImagenBinding
 import com.dam.ad.notedam.databinding.ItemNotaListaBinding
 import com.dam.ad.notedam.databinding.ItemNotaTextoBinding
+import com.dam.ad.notedam.utils.MainContext
 import java.util.*
 
 class ItemNotaAdapter(
@@ -35,9 +37,8 @@ class ItemNotaAdapter(
             }
             TIPO_LISTA -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_nota_imagen, parent, false)
-                TextoViewHolder(view)
-                TextoViewHolder(view)
+                    .inflate(R.layout.item_nota_lista, parent, false)
+                ListaViewHolder(view)
             }
             else -> throw IllegalArgumentException("Tipo de vista desconocido")
         }
@@ -56,7 +57,22 @@ class ItemNotaAdapter(
     override fun getItemViewType(position: Int): Int {
         return when (listItem[position]) {
             is NotaTexto -> TIPO_TEXTO
-            else -> TODO()
+            is NotaLista -> TIPO_LISTA
+            is NotaImagen -> TIPO_IMAGEN
+        }
+    }
+
+    fun onItemMove(fromPosition: Int, toPosition: Int) {
+        Collections.swap(listItem, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
+        cambiarPrioridades()
+    }
+
+    private fun cambiarPrioridades() {
+        var contador = 0
+        listItem.forEach {
+            it.prioridad = contador
+            contador++
         }
     }
 
@@ -90,7 +106,7 @@ class ItemNotaAdapter(
             notaImagen.uriImagen?.let {
                 binding.imagenNota.setImageURI(it)
             }?:let {
-                binding.imagenNota.setImageResource(R.drawable.img_default_background)
+                binding.imagenNota.setImageResource(R.mipmap.img_default_layout)
             }
             binding.textoNotaImagen.text = notaImagen.textoNota
         }
@@ -108,26 +124,20 @@ class ItemNotaAdapter(
     }
 
     inner class ListaViewHolder (view : View) : ViewHolder(view) {
-        val binding = ItemNotaListaBinding.bind(view)
+        private val binding = ItemNotaListaBinding.bind(view)
 
         override fun bind(nota: Nota) {
             val notaLista = nota as NotaLista
             binding.textoNotaLista.text = notaLista.textoNota
-            binding.recyclerViewLista.adapter = SubListAdapter(
-                listItem = notaLista.lista,
-                onLongClick = {uuid ->
-                    val elemento = notaLista.lista.find { it.uuid == uuid }
-                    if (elemento != null) {
-                        notaLista.lista.removeIf { it.uuid == elemento.uuid }
-                    }
-                },
-                onClick = { uuid ->
-                    val elemento = notaLista.lista.find { it.uuid == uuid }
-                    if (elemento != null) {
-                        elemento.boolean = !elemento.boolean
-                    }
-                }
+            val adapter = SubListAdapter(
+                listItem = notaLista.lista
             )
+            val mLayoutManager = LinearLayoutManager(MainContext.mainActivity)
+
+            binding.recyclerViewLista.apply {
+                this.adapter = adapter
+                this.layoutManager = mLayoutManager
+            }
         }
 
         override fun setListener(nota: Nota) {

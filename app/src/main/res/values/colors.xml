@@ -6,4 +6,5 @@
     <color name="AzulSemiOscuro">#c06500</color>
     <color name="AzulSemiClaro">#ffcc50</color>
     <color name="AzulClaro">#ffff89</color>
+    <color name="semiTransparentBlack">#80000000</color>
 </resources>

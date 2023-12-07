@@ -13,9 +13,7 @@ import com.dam.ad.notedam.databinding.ItemSublistaBinding
 import java.util.*
 
 class SubListAdapter (
-    private var listItem: MutableList<SubList>,
-    private val onLongClick: (UUID) -> Unit,
-    private val onClick: (UUID) -> Unit
+    private var listItem: MutableList<SubList>
 ) : RecyclerView.Adapter<SubListAdapter.ViewHolder>() {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,6 +30,11 @@ class SubListAdapter (
     override fun getItemCount(): Int {
         return listItem.count()
     }
+
+    fun removeElement(uuid: UUID) {
+        listItem.removeIf { it.uuid == uuid }
+        notifyDataSetChanged()
+    }
     
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -44,17 +47,14 @@ class SubListAdapter (
         }
 
         fun setListener(subList: SubList) {
-            binding.root.apply {
-                this.setOnLongClickListener {
-                    onLongClick(subList.uuid)
-                    true // Indicar que el clic largo fue manejado
-                }
-                this.setOnClickListener {
-                    onClick(subList.uuid)
-                }
+            binding.checkBoxElement.setOnLongClickListener {
+                removeElement(subList.uuid)
+                true
+            }
+            binding.checkBoxElement.setOnCheckedChangeListener { _, isChecked ->
+                val subList = listItem.find { it.uuid == subList.uuid }
+                subList?.boolean = isChecked
             }
         }
-
-
     }
 }
