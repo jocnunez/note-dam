@@ -60,4 +60,16 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    // Result
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.17")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("javax.xml.stream:stax-api:1.0-2")
+
 }

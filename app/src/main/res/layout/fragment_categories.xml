@@ -15,5 +15,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_categorias"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:src="@drawable/baseline_add_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true" android:id="@+id/addButton"
+            android:layout_marginStart="-80dp" app:layout_constraintStart_toEndOf="@+id/categoriasRecyclerView"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="649dp"
+            app:backgroundTint="@color/AzulOscuro" android:contentDescription="Add"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

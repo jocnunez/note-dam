@@ -1,19 +1,13 @@
 package com.dam.ad.notedam.Adapters
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ItemCategoriasBinding
-import java.util.*
 
 class ItemCategoriaAdapter(
     private var listItem: MutableList<Categoria>,

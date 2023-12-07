@@ -12,11 +12,17 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavHostController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dam.ad.notedam.Activities.MainActivity
 import com.dam.ad.notedam.Adapters.ItemCategoriaAdapter
 import com.dam.ad.notedam.Adapters.ItemOnClickListener
+import com.dam.ad.notedam.Config.ConfigFileType
+import com.dam.ad.notedam.Config.ConfigStorageType
+import com.dam.ad.notedam.Enums.StorageType
 import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.FragmentCategoriesBinding
+import com.dam.ad.notedam.repositories.CategoriaRepository
+import com.dam.ad.notedam.repositories.ICategoriaRepository
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -27,9 +33,10 @@ class CategoriesFragment() : Fragment() , ItemOnClickListener<Categoria>{
     private var _binding:FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var repository : ICategoriaRepository
     private lateinit var mAdapter : ItemCategoriaAdapter
     private lateinit var mLayoutManager : LinearLayoutManager
-    val lista: MutableList<Categoria> = mutableListOf()
+    var lista: MutableList<Categoria> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,31 +46,69 @@ class CategoriesFragment() : Fragment() , ItemOnClickListener<Categoria>{
 
 
         setRecyclerView()
+        binding.addButton.setOnClickListener {
+            addNewCategoria()
+        }
 
         return binding.root
     }
 
+    private fun addNewCategoria() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Nueva categoria")
+
+        val input = EditText(requireContext())
+        builder.setView(input)
+
+        builder.setPositiveButton("Guardar") { _, _ ->
+            Log.i("CategoriesFragment" , "Guardando")
+            repository.addItem(
+                Categoria(
+                    nombreCategoria = input.text.toString(),
+                    prioridadCategoria = lista.size
+                )
+            )
+
+            mAdapter.notifyDataSetChanged()
+
+        }
+
+        builder.setNegativeButton("Cancelar") { dialog, _ -> dialog.cancel() }
+
+        builder.show()
+    }
 
 
     private fun setRecyclerView() {
         // Cargar Lista
-
-
+        repository = CategoriaRepository(activity as MainActivity)
+        lista = repository.loadAllItems().component1()!!
 
         // Crear el adaptador y configurar el RecyclerView
         mAdapter = ItemCategoriaAdapter(lista, this,
             onArrowUpClick = { position : Int ->
                 if (position > 0) {
                     val item = lista.removeAt(position)
+                    item.subirCategoria();
                     lista.add(position - 1, item)
+                    lista[position].bajarCategoria()
                     mAdapter.notifyItemMoved(position, position - 1)
+                    lista.forEach {
+                        repository.updateItem(it)
+                    }
                 }
+
             },
            onArrowDownClick = { position ->
                if (position < lista.size - 1) {
                    val item = lista.removeAt(position)
+                   item.bajarCategoria();
                    lista.add(position + 1, item)
+                   lista[position].subirCategoria()
                    mAdapter.notifyItemMoved(position, position + 1)
+                   lista.forEach {
+                       repository.updateItem(it)
+                   }
                }
         })
         mLayoutManager = LinearLayoutManager(requireContext())
@@ -73,6 +118,8 @@ class CategoriesFragment() : Fragment() , ItemOnClickListener<Categoria>{
             adapter = mAdapter
         }
     }
+
+
 
     override fun onClick(uuid: UUID) {
         abrirCategoria(uuid)
@@ -117,6 +164,8 @@ class CategoriesFragment() : Fragment() , ItemOnClickListener<Categoria>{
 
             categoria.nombreCategoria = nuevoNombre
 
+            repository.updateItem(categoria)
+
             mAdapter.notifyDataSetChanged()
 
             Toast.makeText(requireContext(), "Nombre actualizado", Toast.LENGTH_SHORT).show()
@@ -130,7 +179,8 @@ class CategoriesFragment() : Fragment() , ItemOnClickListener<Categoria>{
     private fun onDelete(uuid: UUID) {
         Log.d("CategoriaAdapter", "onDelete: $uuid")
         val posicion = lista.indexOf(lista.find { it.uuid == uuid })
-        mAdapter.removeItem(posicion)
+        repository.deleteItem(lista.find { it.uuid == uuid }!!)
+        mAdapter.notifyDataSetChanged()
     }
 
 

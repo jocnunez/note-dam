@@ -12,21 +12,31 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dam.ad.notedam.Activities.MainActivity
+import com.dam.ad.notedam.Adapters.ItemCategoriaAdapter
+import com.dam.ad.notedam.Adapters.ItemNotaAdapter
+import com.dam.ad.notedam.Adapters.ItemOnClickListener
 import com.dam.ad.notedam.Config.ConfigFileType
 import com.dam.ad.notedam.Config.ConfigStorageType
+import com.dam.ad.notedam.Models.Categoria
+import com.dam.ad.notedam.Models.ToDOList
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.FragmentTodosBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class TodosFragment : Fragment() {
+class TodosFragment : Fragment(), ItemOnClickListener<ToDOList> {
 
     private var _binding: FragmentTodosBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mAdapter : ItemCategoriaAdapter
+    private lateinit var mLayoutManager : LinearLayoutManager
 
+
+    val lista: MutableList<ToDOList> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +64,7 @@ class TodosFragment : Fragment() {
         return binding.root
     }
 
+
     private fun saveLastCategory(uuid: UUID) {
         try {
             val prefs: SharedPreferences = requireActivity().getSharedPreferences(
@@ -66,6 +77,14 @@ class TodosFragment : Fragment() {
             // Manejar cualquier excepción que pueda ocurrir al guardar las preferencias
             e.printStackTrace()
         }
+    }
+
+    override fun onClick(uuid: UUID) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLongClickListener(uuid: UUID): Boolean {
+        TODO("Not yet implemented")
     }
 
 
