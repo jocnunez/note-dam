@@ -62,6 +62,11 @@ class CsvStorageService : IStorageService {
     }
 
     override fun read(context: Context): List<Category> {
+        if (!context.getFileStreamPath(categoriesFile).exists() ||
+            !context.getFileStreamPath(todosFile).exists() ||
+            !context.getFileStreamPath(sublistsFile).exists()
+        ) return emptyList()
+
         return readCategories(context)
     }
 
