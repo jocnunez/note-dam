@@ -49,5 +49,5 @@ sealed class Todo {
 
 data class SublistItem(
     val title: String,
-    val completed: Boolean = false
+    var completed: Boolean = false
 )
