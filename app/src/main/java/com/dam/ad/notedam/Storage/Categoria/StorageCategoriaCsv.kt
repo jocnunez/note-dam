@@ -45,9 +45,10 @@ class StorageCategoriaCsv : IStorageLocal<Categoria> {
             // Procesar cada línea según sea necesario
             for (linea in lineas) {
                 val columnas = linea.split(",")
+                val nombreCategoria = columnas[0].replace("\\n", "\n")
                 listaCategorias.add(
                     Categoria(
-                        nombreCategoria = columnas[0],
+                        nombreCategoria = nombreCategoria,
                         prioridadCategoria = columnas[1].toInt(),
                         uuid = UUID.fromString(columnas[2])!!
                     )
@@ -64,7 +65,7 @@ class StorageCategoriaCsv : IStorageLocal<Categoria> {
         listaCategorias.forEach {
             Log.i("PRUEBA", it.toString())
             it.prioridadCategoria = contador
-            contador+=1
+            contador += 1
         }
 
         listaCategorias.apply { sortBy { it.prioridadCategoria } }
@@ -93,8 +94,11 @@ class StorageCategoriaCsv : IStorageLocal<Categoria> {
             fichero.createNewFile()
         }
 
-        // Escribimos el encabezado, separados por comas
-        fichero.appendText("${categoria.nombreCategoria},${categoria.prioridadCategoria},${categoria.uuid}\n")
-        Log.i("StorageCsv", "Escritura exitosa en el archivo")}
+        // Reemplazamos los saltos de línea en el campo de texto con un carácter de escape
+        val textoCategoria = categoria.nombreCategoria.replace("\n", "\\n")
+        // Escribimos el encabezado, separados por comas y seguido por el separador de línea del sistema
+        fichero.appendText("${textoCategoria},${categoria.prioridadCategoria},${categoria.uuid}${System.lineSeparator()}")
+        Log.i("StorageCsv", "Escritura exitosa en el archivo")
+    }
 
 }

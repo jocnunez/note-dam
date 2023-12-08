@@ -1,5 +1,6 @@
 package com.dam.ad.notedam.Models.nota
 
+import com.dam.ad.notedam.Enums.NotaType
 import java.util.*
 
 sealed class Nota (
@@ -7,4 +8,6 @@ sealed class Nota (
 ) {
     fun bajarCategoria() { prioridad -= 1 }
     fun subirCategoria() { prioridad += 1 }
+
+    open val tipoNota : NotaType? =  null
 }

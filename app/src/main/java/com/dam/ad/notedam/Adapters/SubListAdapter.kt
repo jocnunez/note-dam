@@ -44,16 +44,20 @@ class SubListAdapter (
         fun bind(subList: SubList) {
             binding.checkBoxElement.text = subList.texto
             binding.checkBoxElement.isChecked = subList.boolean
+
+            binding.checkBoxElement.setOnCheckedChangeListener(null)
+            binding.checkBoxElement.setOnCheckedChangeListener { _, isChecked ->
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listItem[position].boolean = isChecked
+                }
+            }
         }
 
         fun setListener(subList: SubList) {
             binding.checkBoxElement.setOnLongClickListener {
                 removeElement(subList.uuid)
                 true
-            }
-            binding.checkBoxElement.setOnCheckedChangeListener { _, isChecked ->
-                val subList = listItem.find { it.uuid == subList.uuid }
-                subList?.boolean = isChecked
             }
         }
     }

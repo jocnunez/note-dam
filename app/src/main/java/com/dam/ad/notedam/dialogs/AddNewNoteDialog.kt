@@ -1,4 +1,4 @@
-package com.dam.ad.notedam.Fragments
+package com.dam.ad.notedam.dialogs
 
 import android.app.Activity
 import android.app.Dialog
@@ -21,7 +21,7 @@ import com.dam.ad.notedam.Models.nota.*
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.NewNotaBinding
 
-class AddNewNoteFragment : DialogFragment() {
+class AddNewNoteDialog : DialogFragment() {
 
     lateinit var binding : NewNotaBinding
     val lista = mutableListOf<SubList>()
@@ -106,9 +106,10 @@ class AddNewNoteFragment : DialogFragment() {
         if (binding.textNewNoteLista.text!!.isNotEmpty()) {
             lista.add(
                 SubList(
-                boolean = false,
+                    boolean = false,
                     texto = binding.textNewNoteLista.text.toString()
-            ))
+                )
+            )
             mAdapter.notifyDataSetChanged()
             binding.textNewNoteLista.setText("")
         }
@@ -127,6 +128,14 @@ class AddNewNoteFragment : DialogFragment() {
             adapter = mAdapter
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Configura el ancho del diálogo al 75% de la pantalla
+        val width = (resources.displayMetrics.widthPixels * 0.75).toInt()
+        dialog?.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -179,7 +188,7 @@ class AddNewNoteFragment : DialogFragment() {
 
     private fun guardarNotaLista() {
         if (lista.isNotEmpty()) {
-            val nota = NotaLista (
+            val nota = NotaLista(
                 textoNota = binding.textNewNoteList.text.toString(),
                 lista = lista
             )

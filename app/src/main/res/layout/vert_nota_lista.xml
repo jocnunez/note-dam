@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" android:padding="25sp">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6"
+            android:text="Titulo"/>
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textVerNotaLista"
+                android:hint="Texto"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_margin="15sp"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldLista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textNewElementVerLista"
+                    android:hint="Nueva Opcion"
+            />
+            <ImageButton
+                    android:src="@drawable/baseline_add_24"
+                    android:layout_width="61dp"
+                    android:layout_height="55dp" android:id="@+id/addElementListButtonVerNota"
+                    android:layout_weight="1" android:layout_gravity="end"
+                    android:contentDescription="Add"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerSubListVerNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:background="@color/white" tools:listitem="@layout/item_sublista" tools:itemCount="2"/>
+    <Button
+            android:text="Guardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/saveButtonVerLista" android:layout_gravity="end"
+            android:backgroundTint="@color/AzulSemiClaro" android:layout_marginTop="10sp"/>
+
+</LinearLayout>
