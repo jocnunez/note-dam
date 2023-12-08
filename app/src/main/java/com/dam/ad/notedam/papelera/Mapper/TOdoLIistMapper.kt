@@ -1,9 +1,9 @@
-package com.dam.ad.notedam.Models.Mapper
+package com.dam.ad.notedam.papelera.Mapper
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.dam.ad.notedam.Models.DTO.DTOToDoList
-import com.dam.ad.notedam.Models.ToDOList
+import com.dam.ad.notedam.papelera.DTOToDoList
+import com.dam.ad.notedam.papelera.ToDOList
 import java.util.UUID
 
 

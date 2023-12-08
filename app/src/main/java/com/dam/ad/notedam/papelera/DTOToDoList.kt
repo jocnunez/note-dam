@@ -1,10 +1,8 @@
-package com.dam.ad.notedam.Models.DTO
+package com.dam.ad.notedam.papelera
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
-import java.util.UUID
-
 
 @JacksonXmlRootElement(localName = "ToDoList")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

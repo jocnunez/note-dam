@@ -1,19 +1,16 @@
-package com.dam.ad.notedam.Storage
+package com.dam.ad.notedam.papelera
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.dam.ad.notedam.Models.DTO.DTOToDoList
-import com.dam.ad.notedam.Models.JsonAdapters.DTOToDOListAdapterGson
-import com.dam.ad.notedam.Models.Mapper.toDTOToDoList
-import com.dam.ad.notedam.Models.Mapper.toToDOList
-import com.dam.ad.notedam.Models.ToDOList
+import com.dam.ad.notedam.papelera.Mapper.toDTOToDoList
+import com.dam.ad.notedam.papelera.Mapper.toToDOList
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.google.gson.GsonBuilder
 import java.io.File
-import java.util.UUID
+import java.util.*
 
 class Storage {
 //PARTE DE CONTROL CSV´S
@@ -21,7 +18,7 @@ class Storage {
     /***
      * Funcion que escribe en CSV
      */
-    fun writeCSV(archivo:ToDOList) {
+    fun writeCSV(archivo: ToDOList) {
         val path = "${System.getProperty("user.dir")}${File.separator}data${File.separator}${archivo.uuid}.csv"
         val fichero = File(path)
         // si no existe lo creamos
@@ -41,7 +38,7 @@ class Storage {
     fun readAllCSV(filePath: String):List<ToDOList> {
         var nombre:String =""
         var prioridad:Int = 99
-        var uuid:UUID  = UUID.randomUUID()
+        var uuid: UUID = UUID.randomUUID()
         var listaClase:MutableList<String> = mutableListOf()
         var salida= ToDOList(nombre)
         var listaSalida:MutableList<ToDOList> = mutableListOf()
@@ -161,14 +158,14 @@ class Storage {
      * Funcion que escribe el XML
      */
     @RequiresApi(Build.VERSION_CODES.O)
-    fun writeXML(archivo:ToDOList){
+    fun writeXML(archivo: ToDOList){
         val path = "${System.getProperty("user.dir")}${File.separator}data${File.separator}${archivo.uuid}.xml"
         val fichero = File(path)
         if (!fichero.exists()) {
             fichero.createNewFile()
         }
         val xmlMapper = XmlMapper(JacksonXmlModule().apply { setDefaultUseWrapper(false) }
-                ).apply {
+        ).apply {
                     enable(SerializationFeature.INDENT_OUTPUT)
                     enable(SerializationFeature.WRAP_ROOT_VALUE)
                     enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)}

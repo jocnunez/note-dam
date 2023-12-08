@@ -1,13 +1,6 @@
-package com.dam.ad.notedam.Models.JsonAdapters
+package com.dam.ad.notedam.papelera
 
-import com.dam.ad.notedam.Models.DTO.DTOToDoList
-import com.google.gson.JsonArray
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
-import com.google.gson.JsonSerializationContext
-import com.google.gson.JsonSerializer
+import com.google.gson.*
 import java.lang.reflect.Type
 
 class DTOToDOListAdapterGson: JsonSerializer<DTOToDoList>, JsonDeserializer<DTOToDoList> {
@@ -41,6 +34,6 @@ class DTOToDOListAdapterGson: JsonSerializer<DTOToDoList>, JsonDeserializer<DTOT
               salida.add(it.asString)
             }
         } else null
-        return DTOToDoList(name,uuid, prioridad, salida)
+        return DTOToDoList(name, uuid, prioridad, salida)
     }
 }
