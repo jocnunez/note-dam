@@ -14,7 +14,7 @@
         android:id="@+id/textViewCompletada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tarea_completada"
+        android:text="@string/completed_task"
         android:checked="false"/>
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:text="@string/reproducir_audio" />
+        android:text="@string/play" />
 
 
 </LinearLayout>

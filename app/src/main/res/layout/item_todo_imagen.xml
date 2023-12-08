@@ -14,7 +14,7 @@
         android:id="@+id/textViewCompletada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tarea_completada"
+        android:text="@string/completed_task"
         android:checked="false"/>
 
     <TextView
@@ -26,5 +26,5 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/imagen_texto"/>
+        android:contentDescription="@string/image"/>
 </LinearLayout>

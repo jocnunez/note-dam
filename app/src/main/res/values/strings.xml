@@ -10,15 +10,22 @@
     <string name="welcome">Bienvenide a NoteDAM</string>
     <string name="welcome_message">"La aplicación usa almacenamiento local por defecto. Esto puede ser cambiado en la configuración."</string>
 
+    <!-- Select storage service -->
+    <string name="ok">Continuar</string>
+    <string name="storage_service">Servicio de almacenamiento</string>
+    <string name="select_storage_service">Selecciona el servicio de almacenamiento a utilizar:</string>
+
     <!-- Categories -->
     <string name="categories_select">Selecciona una categoría</string>
     <string name="add">Add</string>
 
     <!-- Settings -->
     <string name="storage_format">Formato de almacenamiento</string>
-    <string name="tarea_completada">Tarea completada?</string>
-    <string name="imagen_texto">Imagen</string>
-    <string name="reproducir_audio">Reproducir</string>
-    <string name="parar_audio">Parar</string>
+
+    <!-- ToDos -->
+    <string name="completed_task">¿Tarea completada?</string>
+    <string name="image">Imagen</string>
+    <string name="play">Reproducir</string>
+    <string name="stop">Parar</string>
 
 </resources>
