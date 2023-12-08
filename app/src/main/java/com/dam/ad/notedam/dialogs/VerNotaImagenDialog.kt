@@ -8,12 +8,14 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.dam.ad.notedam.Models.nota.NotaImagen
+import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.VerNotaImagenBinding
 
 class VerNotaImagenDialog (val notaImagen : NotaImagen) : DialogFragment() {
@@ -59,7 +61,7 @@ class VerNotaImagenDialog (val notaImagen : NotaImagen) : DialogFragment() {
     }
 
     private fun initBindings() {
-        binding.verImagenNotaImagen.setImageURI(notaImagen.uriImagen)
+        cargarImagenDesdeUri(notaImagen.uriImagen, binding.verImagenNotaImagen)
 
         binding.verTextoNotaImagen.setText(notaImagen.textoNota)
         uriImagen = notaImagen.uriImagen
@@ -73,6 +75,17 @@ class VerNotaImagenDialog (val notaImagen : NotaImagen) : DialogFragment() {
 
         binding.verImagenNotaImagen.setOnClickListener {
             seleccionarImagenDeGaleria()
+        }
+    }
+
+    private fun cargarImagenDesdeUri(uri: Uri?, imageView: ImageView) {
+        uri?.let {
+            Glide.with(imageView.context)
+                .load(it)
+                .into(imageView)
+        } ?: run {
+            // Si la URI es nula, establece una imagen predeterminada
+            imageView.setImageResource(R.mipmap.img_default_layout)
         }
     }
 

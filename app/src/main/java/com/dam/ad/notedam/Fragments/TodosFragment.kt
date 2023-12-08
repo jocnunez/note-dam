@@ -12,10 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dam.ad.notedam.Activities.MainActivity
 import com.dam.ad.notedam.Adapters.ItemOnClickListener
 import com.dam.ad.notedam.Config.ConfigFileType
 import com.dam.ad.notedam.Config.ConfigStorageType
 import com.dam.ad.notedam.Enums.NotaType
+import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.Models.nota.*
 import com.dam.ad.notedam.databinding.FragmentTodosBinding
 import com.dam.ad.notedam.dialogs.AddNewNoteDialog
@@ -23,6 +25,7 @@ import com.dam.ad.notedam.dialogs.VerNotaImagenDialog
 import com.dam.ad.notedam.dialogs.VerNotaListaDialog
 import com.dam.ad.notedam.dialogs.VerNotaTextoDialog
 import com.dam.ad.notedam.repositories.INotaRepository
+import com.dam.ad.notedam.repositories.NotaRepository
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -38,7 +41,7 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
 
     var uuid: UUID? = null
 
-    private val lista: MutableList<Nota> = mutableListOf()
+    private var lista: MutableList<Nota> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +50,7 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
 
         _binding = FragmentTodosBinding.inflate(layoutInflater, container, false)
         loadLastList()
+        repository = NotaRepository(requireActivity() as MainActivity, uuid!!)
         setRecyclerView()
 
         binding.addNewButton.setOnClickListener { addNewNota() }
@@ -55,17 +59,21 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
 
     private fun setRecyclerView() {
         // Cargar Lista Notas
-
-        lista.add(NotaTexto("Prueba1"))
-        lista.add(NotaImagen(null, "Prueba2"))
-        lista.add(NotaLista("Hacer" , mutableListOf(
-            SubList(boolean = true, texto = "Prueba3"),
-            SubList(boolean = false, texto = "Prueba4")
-        )))
+        lista = repository.loadAllItems().component1()!!
 
         mAdapter = ItemNotaAdapter(
             lista,
-            this
+            this,
+            onDeleteClick = {uuid ->
+                val nota = lista.find { it.uuid == uuid }?.let {
+                    repository.deleteItem(it).component1()!!
+                }
+                lista.removeIf { it.uuid == nota?.uuid }
+                mAdapter.notifyDataSetChanged()
+                if (nota != null) {
+                    repository.deleteItem(nota)
+                }
+            }
         )
 
         mLayoutManager = LinearLayoutManager(requireContext())
@@ -120,8 +128,11 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
         // Configura un listener para recibir datos de la ventana modal
         dialog.setListener(object : AddNewNoteDialog.OnNoteAddedListener {
             override fun onNoteAdded(nuevaNota: Nota) {
+                nuevaNota.prioridad = lista.size
                 // Agrega la nueva nota a tu lista y actualiza el adaptador
-                lista.add(nuevaNota)
+                repository.addItem(
+                    nuevaNota
+                )
                 mAdapter.notifyDataSetChanged()
 
                 binding.backgroundOverlay.visibility = View.INVISIBLE
@@ -132,7 +143,7 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
     }
 
     override fun onClick(uuid: UUID) {
-        lista.find {it.uuidNota == uuid}?.let {
+        lista.find {it.uuid == uuid}?.let {
             when (it.tipoNota) {
                 NotaType.Texto -> verNotaTexto(it)
                 NotaType.Lista -> verNotaLista(it)
@@ -142,8 +153,6 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
         }
 
     }
-
-
 
     override fun onLongClickListener(uuid: UUID): Boolean {
         return true
@@ -170,7 +179,20 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
             ): Boolean {
                 val fromPosition = viewHolder.adapterPosition
                 val toPosition = target.adapterPosition
-                mAdapter.onItemMove(fromPosition, toPosition)
+
+                // Intercambiar las notas en la lista
+                Collections.swap(lista, fromPosition, toPosition)
+
+                // Actualizar la posición de las notas en el adaptador
+                mAdapter.notifyItemMoved(fromPosition, toPosition)
+
+                // Actualizar las prioridades en la lista
+                mAdapter.updatePrioritiesAfterDragAndDrop()
+
+                lista.forEach {
+                    repository.updateItem(it)
+                }
+
                 return true
             }
 
@@ -191,7 +213,7 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
                 nota.uriImagen = nuevaNota.uriImagen
                 nota.textoNota = nuevaNota.textoNota
                 mAdapter.notifyDataSetChanged()
-
+                repository.updateItem(nuevaNota)
             }
 
         })
@@ -205,7 +227,7 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
                 nota.textoNota = nuevaNota.textoNota
                 nota.lista = nuevaNota.lista
                 mAdapter.notifyDataSetChanged()
-
+                repository.updateItem(nuevaNota)
             }
 
         })
@@ -218,7 +240,7 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
             override fun onNotaChanged(nuevaNota: String) {
                 nota.textoNota = nuevaNota
                 mAdapter.notifyDataSetChanged()
-
+                repository.updateItem(nota)
             }
 
         })

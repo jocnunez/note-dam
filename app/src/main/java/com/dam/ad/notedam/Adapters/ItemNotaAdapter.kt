@@ -1,8 +1,11 @@
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dam.ad.notedam.Adapters.ItemOnClickListener
 import com.dam.ad.notedam.Adapters.SubListAdapter
 import com.dam.ad.notedam.Models.nota.*
@@ -15,7 +18,8 @@ import java.util.*
 
 class ItemNotaAdapter(
     private var listItem: MutableList<Nota>,
-    private var listener: ItemOnClickListener<Nota>
+    private var listener: ItemOnClickListener<Nota>,
+    private val onDeleteClick: (UUID) -> Unit,
 ) : RecyclerView.Adapter<ItemNotaAdapter.ViewHolder>()  {
 
     // Tipos de vistas
@@ -76,6 +80,12 @@ class ItemNotaAdapter(
         }
     }
 
+    fun updatePrioritiesAfterDragAndDrop() {
+        listItem.forEachIndexed { index, nota ->
+            nota.prioridad = index
+        }
+    }
+
     // ViewHolder para notas de texto
     inner class TextoViewHolder(view: View) : ViewHolder(view) {
         val binding = ItemNotaTextoBinding.bind(view)
@@ -83,44 +93,60 @@ class ItemNotaAdapter(
             val notaCambiada = nota as NotaTexto
             binding.textoNota.text = notaCambiada.textoNota
             binding.deleteButton.setImageResource(R.drawable.baseline_delete_24)
+
+            binding.deleteButton.setOnClickListener {
+                onDeleteClick(nota.uuid)
+            }
         }
 
         override fun setListener(nota: Nota) {
             binding.root.apply {
                 setOnClickListener {
-                    listener.onClick(nota.uuidNota)
+                    listener.onClick(nota.uuid)
                 }
                 setOnLongClickListener {
-                    listener.onLongClickListener(nota.uuidNota)
+                    listener.onLongClickListener(nota.uuid)
                 }
             }
         }
 
     }
 
-    // ViewHolder para notas de imagen
     inner class ImagenViewHolder(view: View) : ViewHolder(view) {
         val binding = ItemNotaImagenBinding.bind(view)
+
         override fun bind(nota: Nota) {
             val notaImagen = nota as NotaImagen
-            notaImagen.uriImagen?.let {
-                binding.imagenNota.setImageURI(it)
-            }?:let {
-                binding.imagenNota.setImageResource(R.mipmap.img_default_layout)
-            }
+            cargarImagenDesdeUri(notaImagen.uriImagen, binding.imagenNota)
             binding.textoNotaImagen.text = notaImagen.textoNota
+
+            binding.deleteButton.setOnClickListener {
+                onDeleteClick(nota.uuid)
+            }
         }
 
         override fun setListener(nota: Nota) {
             binding.root.apply {
                 setOnClickListener {
-                    listener.onClick(nota.uuidNota)
+                    listener.onClick(nota.uuid)
                 }
                 setOnLongClickListener {
-                    listener.onLongClickListener(nota.uuidNota)
+                    listener.onLongClickListener(nota.uuid)
                 }
             }
         }
+
+        private fun cargarImagenDesdeUri(uri: Uri?, imageView: ImageView) {
+            uri?.let {
+                Glide.with(imageView.context)
+                    .load(it)
+                    .into(imageView)
+            } ?: run {
+                // Si la URI es nula, establece una imagen predeterminada
+                imageView.setImageResource(R.mipmap.img_default_layout)
+            }
+        }
+
     }
 
     inner class ListaViewHolder (view : View) : ViewHolder(view) {
@@ -138,15 +164,19 @@ class ItemNotaAdapter(
                 this.adapter = adapter
                 this.layoutManager = mLayoutManager
             }
+
+            binding.deleteButton.setOnClickListener {
+                onDeleteClick(nota.uuid)
+            }
         }
 
         override fun setListener(nota: Nota) {
             binding.root.apply {
                 setOnClickListener {
-                    listener.onClick(nota.uuidNota)
+                    listener.onClick(nota.uuid)
                 }
                 setOnLongClickListener {
-                    listener.onLongClickListener(nota.uuidNota)
+                    listener.onLongClickListener(nota.uuid)
                 }
             }
         }

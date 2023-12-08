@@ -20,8 +20,8 @@ import com.github.michaelbull.result.onFailure
 import java.util.*
 
 class CategoriaRepository (activity: MainActivity) : ICategoriaRepository {
-    lateinit var storage: IStorage<Categoria>
-    var listaCategorias: MutableList<Categoria>
+    var storage: IStorage<Categoria>
+    private var listaCategorias: MutableList<Categoria>
 
     init {
         storage = when (ConfigStorageType.loadStorageType(activity)) {

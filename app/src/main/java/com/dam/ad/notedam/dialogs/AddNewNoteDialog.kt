@@ -161,7 +161,6 @@ class AddNewNoteDialog : DialogFragment() {
                 textoNota = binding.textNewNoteText.text.toString()
             )
             listener?.onNoteAdded(nota)
-
             dismiss()
         }
     }
