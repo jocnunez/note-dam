@@ -29,6 +29,8 @@ class JsonStorageService : IStorageService {
     }
 
     override fun read(context: Context): List<Category> {
+        if (!context.getFileStreamPath(file).exists()) return emptyList()
+
         val json = context.openFileInput(file).bufferedReader().readText()
         return gson.fromJson(json, Array<Category>::class.java).asList()
     }
@@ -56,7 +58,7 @@ class TodoAdapter : JsonSerializer<Todo>, JsonDeserializer<Todo> {
         val jsonObject = json?.asJsonObject
         val type = jsonObject?.get("type")?.asString
         val data = jsonObject?.get("data")
-        return context?.deserialize(data, Class.forName(type)) as Todo
+        return context?.deserialize(data, type?.let { Class.forName(it) }) as Todo
     }
 }
 
