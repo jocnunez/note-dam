@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.dam.ad.notedam.utils.MainContext
+import com.dam.ad.notedam.utils.Utils
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        MainContext.mainActivity = this
+        Utils.mainActivity = this
         setContentView(binding.root)
         initNavMenu()
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.Models.nota.Nota
+import com.dam.ad.notedam.Models.nota.NotaLista
 import com.dam.ad.notedam.Models.nota.SubList
 import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ItemCategoriasBinding
@@ -13,7 +14,8 @@ import com.dam.ad.notedam.databinding.ItemSublistaBinding
 import java.util.*
 
 class SubListAdapter (
-    private var listItem: MutableList<SubList>
+    private var listItem: MutableList<SubList>,
+    private val onSubListChangedListener: ((MutableList<SubList>) -> Unit)? = null
 ) : RecyclerView.Adapter<SubListAdapter.ViewHolder>() {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +37,10 @@ class SubListAdapter (
         listItem.removeIf { it.uuid == uuid }
         notifyDataSetChanged()
     }
-    
+
+    private fun notifySubListChanged() {
+        onSubListChangedListener?.invoke(listItem)
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -51,12 +56,14 @@ class SubListAdapter (
                 if (position != RecyclerView.NO_POSITION) {
                     listItem[position].boolean = isChecked
                 }
+                notifySubListChanged()
             }
         }
 
         fun setListener(subList: SubList) {
             binding.checkBoxElement.setOnLongClickListener {
                 removeElement(subList.uuid)
+                notifySubListChanged()
                 true
             }
         }

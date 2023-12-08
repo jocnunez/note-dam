@@ -10,7 +10,7 @@ import com.dam.ad.notedam.Adapters.SubListAdapter
 import com.dam.ad.notedam.Models.nota.NotaLista
 import com.dam.ad.notedam.Models.nota.SubList
 import com.dam.ad.notedam.databinding.VertNotaListaBinding
-import com.dam.ad.notedam.utils.MainContext
+import com.dam.ad.notedam.utils.Utils
 
 class VerNotaListaDialog (val notaLista : NotaLista) : DialogFragment() {
 
@@ -47,7 +47,7 @@ class VerNotaListaDialog (val notaLista : NotaLista) : DialogFragment() {
         mAdapter = SubListAdapter(
             listItem = notaLista.lista
         )
-        val mLayoutManager = LinearLayoutManager(MainContext.mainActivity)
+        val mLayoutManager = LinearLayoutManager(Utils.mainActivity)
 
         binding.recyclerSubListVerNota.apply {
             this.adapter = mAdapter

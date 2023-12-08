@@ -1,7 +1,7 @@
 package com.dam.ad.notedam.Storage.Categoria
 
 import android.util.Log
-import com.dam.ad.notedam.utils.MainContext
+import com.dam.ad.notedam.utils.Utils
 import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.Storage.IStorageLocal
 import java.io.File
@@ -9,9 +9,9 @@ import java.io.IOException
 import java.util.*
 
 class StorageCategoriaCsv : IStorageLocal<Categoria> {
-    val path = MainContext.mainActivity!!.getExternalFilesDir(null)
+    val path = Utils.mainActivity!!.getExternalFilesDir(null)
     override fun loadAllItems(uuid: UUID): MutableList<Categoria> {
-        val folder = File(MainContext.mainActivity!!.filesDir, "NoteDam")
+        val folder = File(Utils.mainActivity!!.filesDir, "NoteDam")
 
         // Crea el directorio si no existe
         if (!folder.exists()) {
@@ -76,7 +76,7 @@ class StorageCategoriaCsv : IStorageLocal<Categoria> {
 
     override fun saveAllItems(uuid: UUID, listaItems: MutableList<Categoria>) {
         Log.i("StorageCsv", "Writing All Items CSV ")
-        val folder = File(MainContext.mainActivity!!.filesDir, "NoteDam")
+        val folder = File(Utils.mainActivity!!.filesDir, "NoteDam")
         val fichero = File(folder, "Categorias.csv")
         fichero.writeText("")
         listaItems.forEach {
@@ -86,7 +86,7 @@ class StorageCategoriaCsv : IStorageLocal<Categoria> {
 
     fun writeCSV(uuid: UUID, categoria: Categoria) {
         Log.i("StorageCsv", "Writing CSV -> $categoria")
-        val folder = File(MainContext.mainActivity!!.filesDir, "NoteDam")
+        val folder = File(Utils.mainActivity!!.filesDir, "NoteDam")
         val fichero = File(folder, "Categorias.csv")
 
         // si no existe lo creamos

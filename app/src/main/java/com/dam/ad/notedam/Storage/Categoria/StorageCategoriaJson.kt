@@ -5,7 +5,7 @@ import com.dam.ad.notedam.Storage.IStorageLocal
 import java.util.*
 
 import android.util.Log
-import com.dam.ad.notedam.utils.MainContext
+import com.dam.ad.notedam.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -15,11 +15,11 @@ import java.lang.reflect.Type
 class StorageCategoriaJson : IStorageLocal<Categoria> {
 
     private val gson = Gson()
-    private val path = MainContext.mainActivity!!.filesDir
+    private val path = Utils.mainActivity!!.filesDir
     private val fileName = "Categorias.json"
 
     override fun loadAllItems(uuid: UUID): MutableList<Categoria> {
-        val folder = File(MainContext.mainActivity!!.filesDir, "NoteDam")
+        val folder = File(Utils.mainActivity!!.filesDir, "NoteDam")
 
         // Crea el directorio si no existe
         if (!folder.exists()) {
@@ -63,7 +63,7 @@ class StorageCategoriaJson : IStorageLocal<Categoria> {
         Log.i("StorageJson", "Writing All Items JSON")
 
         try {
-            val folder = File(MainContext.mainActivity!!.filesDir, "NoteDam")
+            val folder = File(Utils.mainActivity!!.filesDir, "NoteDam")
 
             // Crea el directorio si no existe
             if (!folder.exists()) {

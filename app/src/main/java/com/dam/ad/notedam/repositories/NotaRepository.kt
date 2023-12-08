@@ -1,5 +1,6 @@
 package com.dam.ad.notedam.repositories
 
+import StorageNotaJson
 import android.util.Log
 import com.dam.ad.notedam.Activities.MainActivity
 import com.dam.ad.notedam.Config.ConfigFileType
@@ -12,17 +13,18 @@ import com.dam.ad.notedam.Models.nota.NotaLista
 import com.dam.ad.notedam.Models.nota.NotaTexto
 import com.dam.ad.notedam.Storage.IStorage
 import com.dam.ad.notedam.Storage.Nota.StorageNotaCsv
-import com.dam.ad.notedam.errors.CategoriaNotFoundError
+import com.dam.ad.notedam.Storage.Nota.StorageNotaMongo
+import com.dam.ad.notedam.Storage.Nota.StorageNotaSql
+import com.dam.ad.notedam.Storage.Nota.StorageNotaXml
 import com.dam.ad.notedam.errors.NotaAlreadyExistsError
 import com.dam.ad.notedam.errors.NotaError
 import com.dam.ad.notedam.errors.NotaNotFoundError
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.onFailure
 import java.util.*
 
-class NotaRepository (val activity: MainActivity , val uuidCategoria : UUID) : INotaRepository {
+class NotaRepository (val activity: MainActivity , val uuidCategoria : UUID, ) : INotaRepository {
 
     lateinit var storage: IStorage<Nota>
     lateinit var listaNotas: MutableList<Nota>
@@ -32,13 +34,13 @@ class NotaRepository (val activity: MainActivity , val uuidCategoria : UUID) : I
             StorageType.Local -> {
                 when (ConfigFileType.loadFileType(activity)) {
                     FileType.CSV -> StorageNotaCsv()
-                    FileType.JSON -> TODO()
-                    FileType.XML -> TODO()
+                    FileType.JSON -> StorageNotaJson()
+                    FileType.XML -> StorageNotaXml()
                 }
             }
 
-            StorageType.Sql -> TODO()
-            StorageType.MongoDB -> TODO()
+            StorageType.Sql -> StorageNotaSql()
+            StorageType.MongoDB -> StorageNotaMongo()
         }
 
         listaNotas = storage.loadAllItems(uuid = uuidCategoria)

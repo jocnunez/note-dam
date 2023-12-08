@@ -59,6 +59,7 @@ class CategoriaRepository (activity: MainActivity) : ICategoriaRepository {
         return if (categoriaEncontrada != null) {
             listaCategorias.remove(categoriaEncontrada)
             storage.saveAllItems(UUID.randomUUID(), listaCategorias)
+            storage.deleteFilesWithUUID(item.uuid)
             Ok(categoriaEncontrada)
         } else {
             // La categoría no existe

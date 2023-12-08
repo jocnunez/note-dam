@@ -1,22 +1,19 @@
 package com.dam.ad.notedam.Storage.Nota
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import com.dam.ad.notedam.Models.nota.*
 import com.dam.ad.notedam.Storage.IStorageLocal
-import com.dam.ad.notedam.utils.MainContext
+import com.dam.ad.notedam.utils.Utils
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
-import java.io.IOException
 import java.util.*
 
 class StorageNotaCsv : IStorageLocal<Nota> {
-    val path = MainContext.mainActivity!!.getExternalFilesDir(null)
+    val path = Utils.mainActivity!!.getExternalFilesDir(null)
     override fun loadAllItems(uuid: UUID): MutableList<Nota> {
-        val folder = File(MainContext.mainActivity!!.filesDir, "Notas")
+        val folder = File(Utils.mainActivity!!.filesDir, "Notas")
 
         if (!folder.exists() && !folder.mkdirs()) {
             Log.e("Fichero", "Error al crear la carpeta")
@@ -100,7 +97,7 @@ class StorageNotaCsv : IStorageLocal<Nota> {
 
     override fun saveAllItems(uuid: UUID, listaItems: MutableList<Nota>) {
         Log.i("StorageCsv", "Writing All Items CSV ")
-        val folder = File(MainContext.mainActivity!!.filesDir, "Notas")
+        val folder = File(Utils.mainActivity!!.filesDir, "Notas")
         val fichero = File(folder, "$uuid.csv")
         fichero.writeText("")
         listaItems.forEach {
@@ -110,7 +107,7 @@ class StorageNotaCsv : IStorageLocal<Nota> {
 
     private fun writeCSV(uuid: UUID, nota: Nota) {
         Log.i("StorageNotaCsv", "Writing CSV -> $nota")
-        val folder = File(MainContext.mainActivity!!.filesDir, "Notas")
+        val folder = File(Utils.mainActivity!!.filesDir, "Notas")
         val fichero = File(folder, "$uuid.csv")
         Log.i("StorageNotaCsv", " UNOOOOO")
         // si no existe lo creamos

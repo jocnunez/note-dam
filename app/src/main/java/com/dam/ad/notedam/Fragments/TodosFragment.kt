@@ -1,6 +1,7 @@
 package com.dam.ad.notedam.Fragments
 
 import ItemNotaAdapter
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -57,24 +58,29 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setRecyclerView() {
         // Cargar Lista Notas
         lista = repository.loadAllItems().component1()!!
 
         mAdapter = ItemNotaAdapter(
             lista,
-            this,
-            onDeleteClick = {uuid ->
+            listener = this,
+            onDeleteClick = { uuid ->
                 val nota = lista.find { it.uuid == uuid }?.let {
-                    repository.deleteItem(it).component1()!!
+                    repository.deleteItem(it).component1()
                 }
-                lista.removeIf { it.uuid == nota?.uuid }
-                mAdapter.notifyDataSetChanged()
                 if (nota != null) {
+                    lista.removeIf { it.uuid == nota.uuid }
+                    mAdapter.notifyDataSetChanged()
                     repository.deleteItem(nota)
                 }
+            },
+            onNotaListaChangedListener = { notaLista ->
+                repository.updateItem(notaLista)
             }
         )
+
 
         mLayoutManager = LinearLayoutManager(requireContext())
 

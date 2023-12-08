@@ -1,7 +1,7 @@
 package com.dam.ad.notedam.Storage.Categoria
 
 import android.util.Log
-import com.dam.ad.notedam.utils.MainContext
+import com.dam.ad.notedam.utils.Utils
 import com.dam.ad.notedam.Models.Categoria
 import com.dam.ad.notedam.Storage.IStorageLocal
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
@@ -17,11 +17,11 @@ class StorageCategoriaXml : IStorageLocal<Categoria> {
         enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT)
     }
 
-    private val path = MainContext.mainActivity!!.filesDir
+    private val path = Utils.mainActivity!!.filesDir
     private val fileName = "Categorias.xml"
 
     override fun loadAllItems(uuid: UUID): MutableList<Categoria> {
-        val folder = File(MainContext.mainActivity!!.filesDir, "NoteDam")
+        val folder = File(Utils.mainActivity!!.filesDir, "NoteDam")
 
         // Crea el directorio si no existe
         if (!folder.exists()) {
@@ -67,7 +67,7 @@ class StorageCategoriaXml : IStorageLocal<Categoria> {
         Log.i("StorageXml", "Writing All Items XML")
 
         try {
-            val folder = File(MainContext.mainActivity!!.filesDir, "NoteDam")
+            val folder = File(Utils.mainActivity!!.filesDir, "NoteDam")
 
             // Crea el directorio si no existe
             if (!folder.exists()) {

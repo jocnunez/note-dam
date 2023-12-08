@@ -13,13 +13,14 @@ import com.dam.ad.notedam.R
 import com.dam.ad.notedam.databinding.ItemNotaImagenBinding
 import com.dam.ad.notedam.databinding.ItemNotaListaBinding
 import com.dam.ad.notedam.databinding.ItemNotaTextoBinding
-import com.dam.ad.notedam.utils.MainContext
+import com.dam.ad.notedam.utils.Utils
 import java.util.*
 
 class ItemNotaAdapter(
     private var listItem: MutableList<Nota>,
     private var listener: ItemOnClickListener<Nota>,
     private val onDeleteClick: (UUID) -> Unit,
+    private val onNotaListaChangedListener: ((NotaLista) -> Unit)? = null
 ) : RecyclerView.Adapter<ItemNotaAdapter.ViewHolder>()  {
 
     // Tipos de vistas
@@ -156,9 +157,13 @@ class ItemNotaAdapter(
             val notaLista = nota as NotaLista
             binding.textoNotaLista.text = notaLista.textoNota
             val adapter = SubListAdapter(
-                listItem = notaLista.lista
+                listItem = notaLista.lista,
+                onSubListChangedListener = { _ ->
+                    // Asegúrate de llamar al lambda cuando haya cambios
+                    onNotaListaChangedListener?.invoke(notaLista)
+                }
             )
-            val mLayoutManager = LinearLayoutManager(MainContext.mainActivity)
+            val mLayoutManager = LinearLayoutManager(Utils.mainActivity)
 
             binding.recyclerViewLista.apply {
                 this.adapter = adapter
