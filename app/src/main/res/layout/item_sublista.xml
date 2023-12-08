@@ -4,9 +4,11 @@
     android:layout_height="match_parent">
 
     <CheckedTextView
+        android:id="@+id/textViewSublista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
+        android:checkMark="?android:listChoiceIndicatorMultiple"
         android:checked="false"/>
 
 </LinearLayout>
