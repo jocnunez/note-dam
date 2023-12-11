@@ -8,4 +8,6 @@ data class Category(
     val name: String,
     val createdAt: LocalDate,
     val todos: MutableList<Todo>
-)
+) {
+    override fun toString(): String = name
+}

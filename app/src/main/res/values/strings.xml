@@ -27,5 +27,7 @@
     <string name="image">Imagen</string>
     <string name="play">Reproducir</string>
     <string name="stop">Parar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
