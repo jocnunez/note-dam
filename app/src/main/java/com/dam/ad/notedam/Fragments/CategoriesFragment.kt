@@ -154,7 +154,7 @@ class CategoriesFragment() : Fragment() , ItemOnClickListener<Categoria>{
         val categoria = lista.find { it.uuid == uuid }!!
 
         val input = EditText(requireContext())
-        input.setText(categoria.nombreCategoria) // Establecer el texto actual en el cuadro de texto
+        input.setText(categoria.nombreCategoria) 
 
         builder.setView(input)
 

@@ -51,6 +51,11 @@ class TodosFragment : Fragment(), ItemOnClickListener<Nota> {
 
         _binding = FragmentTodosBinding.inflate(layoutInflater, container, false)
         loadLastList()
+
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+
         repository = NotaRepository(requireActivity() as MainActivity, uuid!!)
         setRecyclerView()
 
