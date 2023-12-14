@@ -6,4 +6,8 @@
     <string name="categories_title">Categories</string>
     <string name="todos_title">ToDos</string>
     <string name="settings_title">Settings</string>
+
+    <string name="prefrences_name">Preferences</string>
+
+    <string name="changeConfigText">¿ Seguro que quieres cambiar la configuración ?</string>
 </resources>

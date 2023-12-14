@@ -5,15 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.TodosFragment">
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="1dp"
+            android:id="@+id/recylerNotas"
+            android:padding="15sp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:src="@drawable/baseline_add_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true" android:id="@+id/add_new_button"
+            app:layout_constraintEnd_toStartOf="@+id/recylerNotas" android:layout_marginEnd="-400dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+            android:contentDescription="Add"/>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/todos_title" />
-
+    <View
+            android:id="@+id/backgroundOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+    android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

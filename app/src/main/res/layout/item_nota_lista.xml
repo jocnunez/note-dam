@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cardListaView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:padding="0sp" android:backgroundTint="@color/AzulSemiOscuro">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp">
+
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textoNotaLista" android:layout_weight="1"
+                android:textColor="@color/black" android:layout_margin="5sp"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" android:layout_margin="10sp"/>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewLista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="8dp"
+                tools:listitem="@layout/item_sublista" android:layout_margin="5sp"/>
+
+        <ImageView
+                android:id="@+id/deleteButton"
+                android:layout_width="38dp"
+                android:layout_height="34dp"
+                android:src="@drawable/baseline_delete_24"
+                android:layout_marginEnd="0sp" android:textAlignment="gravity" android:layout_gravity="end"
+                android:layout_marginTop="2dp"/> <!-- Ajustado el margen entre las flechas -->
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
